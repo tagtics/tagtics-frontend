@@ -46,13 +46,13 @@ export async function registerForEarlyAccess(
     }
 
     const response = await fetch(
-      `${env.REACT_APP_SUPABASE_URL}/register-user`,
+      `${env.SUPABASE_URL}/register-user`,
       {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'apikey': env.REACT_APP_SUPABASE_ANON_KEY,
-          'Authorization': `Bearer ${env.REACT_APP_SUPABASE_ANON_KEY}`, 
+          'apikey': env.SUPABASE_ANON_KEY,
+          'Authorization': `Bearer ${env.SUPABASE_ANON_KEY}`, 
         },
         body: JSON.stringify({
           name: normalizedName,

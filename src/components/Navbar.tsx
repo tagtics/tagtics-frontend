@@ -32,12 +32,10 @@ export const Navbar: React.FC = () => {
         Tagtics
       </div>
       <div className={`md:flex space-x-8 ${isMenuOpen ? 'flex flex-col absolute top-16 left-0 right-0 bg-black/90 p-6 space-y-4 space-x-0' : 'hidden'}`}>
-        <a href="#demo-section" aria-label='Link to Early Access Section' className="text-white/80 hover:text-white transition-colors duration-300" onClick={(e) => handleClick(e, '#demo-section')}>
-          Demo
-        </a>
-                {/* Early Access with Elegant Glow for Dark UI */}
+        {/* Early Access with Elegant Glow for Dark UI */}
         <a
           href="#early-access"
+          aria-label='Link to Early Access Section' 
           onClick={(e) => handleClick(e, '#early-access')}
           className="relative flex items-center gap-2 font-semibold transition-all duration-300 hover:scale-[1.05] group"
         >
@@ -52,7 +50,9 @@ export const Navbar: React.FC = () => {
           {/* Soft glowing pulse orb */}
           <span className="relative w-2.5 h-2.5 rounded-full bg-gradient-to-br from-yellow-400 to-pink-500 shadow-[0_0_8px_rgba(255,180,100,0.8)] animate-pulse-slow after:content-[''] after:absolute after:inset-0 after:rounded-full after:bg-gradient-to-br after:from-yellow-400/40 after:to-pink-500/40 after:blur-md after:animate-ping-slow"></span>
         </a>
-
+        <a href="#demo-section" aria-label='Link to Demo Section' className="text-white/80 hover:text-white transition-colors duration-300" onClick={(e) => handleClick(e, '#demo-section')}>
+          Demo
+        </a>
         <a href="#features" aria-label='Link to Features Section' className="text-white/80 hover:text-white transition-colors duration-300" onClick={(e) => handleClick(e, '#features')}>
           Features
         </a>

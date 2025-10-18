@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
+  "author": {
+    "name": "rishi-rj-s",
+    "email": "tagticsdev@gmail.com",
+    "url": "https://www.tagtics.online"
+  },
+
   "scripts": {
     "dev": "pnpx vite",
     "build": "pnpx vite build",
