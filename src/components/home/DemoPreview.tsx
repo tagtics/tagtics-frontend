@@ -212,7 +212,7 @@ export const DemoPreview: React.FC = () => {
     <section id='demo-section' className="py-20 relative">
       <div className="max-w-7xl mx-auto px-6" data-aos="fade-up">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-text">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 gradient-text">
             Try Our Interactive Demo
           </h2>
           <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto">
