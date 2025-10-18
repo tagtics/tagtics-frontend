@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { CheckIcon, MessageCircleIcon, HeartIcon, SendIcon, XCircleIcon } from 'lucide-react';
+import { CheckIcon, HeartIcon, SendIcon, XCircleIcon } from 'lucide-react';
 
 export const DemoPreview: React.FC = () => {
   const [feedbackMode, setFeedbackMode] = useState(false);
@@ -305,11 +305,35 @@ export const DemoPreview: React.FC = () => {
                 onClick={toggleFeedbackMode}
               >
                 {!feedbackMode ? (
-                  <MessageCircleIcon className="w-5 h-5 text-white feedback-icon" />
+                  <svg
+                    className="w-9 h-9 text-white feedback-icon"
+                    viewBox="0 0 40 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2.2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    {/* Left angle bracket "<" */}
+                    <polyline points="6 6 3 12 6 18" />
+
+                    {/* Magnifying glass circle */}
+                    <circle cx="15" cy="11" r="4.5" />
+
+                    {/* Magnifying glass handle */}
+                    <line x1="18.5" y1="14.5" x2="21" y2="17" />
+
+                    {/* Slash "/" */}
+                    <line x1="26" y1="6" x2="24" y2="18" />
+
+                    {/* Right angle bracket ">" */}
+                    <polyline points="30 6 33 12 30 18" />
+                  </svg>
+
                 ) : (
-                  <HeartIcon className="w-5 h-5 text-white feedback-icon" />
+                  <HeartIcon className="w-6 h-6 text-white feedback-icon" />
                 )}
-                <SendIcon className="w-5 h-5 text-white hidden form-icon" />
+                <SendIcon className="w-6 h-6 text-white hidden form-icon" />
               </div>
 
               {/* Feedback Form */}
