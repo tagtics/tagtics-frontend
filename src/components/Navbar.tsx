@@ -1,9 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MenuIcon, XIcon } from 'lucide-react';
 import AOS from 'aos';
 
 export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+   // Reset menu when viewport changes to desktop size
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setIsMenuOpen(false);
+      }
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleClick = (e: React.MouseEvent, hash: string) => {
     e.preventDefault();
     setIsMenuOpen(false);
@@ -31,7 +43,7 @@ export const Navbar: React.FC = () => {
       <div className="text-xl md:text-2xl font-bold gradient-text">
         Tagtics
       </div>
-      <div className={`md:flex space-x-8 ${isMenuOpen ? 'flex flex-col absolute top-16 left-0 right-0 bg-black/90 p-6 space-y-4 space-x-0' : 'hidden'}`}>
+      <div className={`md:flex md:space-x-8 md:items-center ${isMenuOpen ? 'flex flex-col absolute top-16 left-0 right-0 bg-black/90 p-6 space-y-4 space-x-0' : 'hidden'}`}>
         {/* Early Access with Elegant Glow for Dark UI */}
         <a
           href="#early-access"
