@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Check } from 'lucide-react';
+import { Check, X, AlertCircle } from 'lucide-react';
 import { registerForEarlyAccess } from '../../services/EarlyAccess.service';
 
 type FormValues = {
@@ -16,13 +16,32 @@ type RegistrationResponse = {
   retryAfter?: number;
 };
 
+type NotificationType = 'success' | 'error' | 'warning';
+
+type NotificationState = {
+  show: boolean;
+  type: NotificationType;
+  title: string;
+  message: string;
+};
+
 export const EarlyAccessSection: React.FC = () => {
   const [formData, setFormData] = useState<FormValues>({ name: '', email: '' });
   const [errors, setErrors] = useState<Partial<FormValues>>({});
-  const [generalError, setGeneralError] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [showNotification, setShowNotification] = useState<boolean>(false);
-  const [notificationMessage, setNotificationMessage] = useState<string>('');
+  const [notification, setNotification] = useState<NotificationState>({
+    show: false,
+    type: 'success',
+    title: '',
+    message: ''
+  });
+
+  const showNotification = (type: NotificationType, title: string, message: string) => {
+    setNotification({ show: true, type, title, message });
+    setTimeout(() => {
+      setNotification(prev => ({ ...prev, show: false }));
+    }, 5000);
+  };
 
   const validateEmail = (email: string) => {
     return /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email);
@@ -31,6 +50,7 @@ export const EarlyAccessSection: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    // Client-side validation
     const newErrors: Partial<FormValues> = {};
     if (!formData.name) newErrors.name = 'Name is required';
     if (!formData.email) {
@@ -41,46 +61,70 @@ export const EarlyAccessSection: React.FC = () => {
 
     if (Object.keys(newErrors).length > 0) {
       setErrors(newErrors);
-      setGeneralError('');
       return;
     }
 
     setIsLoading(true);
     setErrors({});
-    setGeneralError('');
 
     try {
-      const response: RegistrationResponse = await registerForEarlyAccess(formData.name, formData.email);
+      const response: RegistrationResponse = await registerForEarlyAccess(
+        formData.name, 
+        formData.email
+      );
 
       if (response.success) {
-        setNotificationMessage(response.message || 'Welcome Aboard! 🎉 Check your email for next steps.');
-        setShowNotification(true);
-        setTimeout(() => {
-          setShowNotification(false);
-        }, 5000);
+        // Show success notification
+        showNotification(
+          'success',
+          'Success! 🎉',
+          response.message ?? 'Welcome Aboard! Check your email for next steps.'
+        );
+        
+        // Clear form on success
         setFormData({ name: '', email: '' });
+
+        // If there's a warning along with success, show it after a delay
+        if (response.warning) {
+          setTimeout(() => {
+            showNotification('warning', 'Note', response.warning ?? 'Please note');
+          }, 5500);
+        }
       } else {
+        // Handle errors
         if (response.error) {
-          // Check if it's a field-specific error; otherwise, set as general
-          if (response.error.includes('email') || response.error.includes('Email')) {
+          // Check if it's a field-specific error
+          const errorLower = response.error.toLowerCase();
+          
+          // Check for "already registered" FIRST before checking for generic "email" keyword
+          if (errorLower.includes('already registered')) {
+            showNotification('error', 'Already Registered', response.error);
+          } else if (errorLower.includes('email') && !errorLower.includes('already')) {
             setErrors({ email: response.error });
-          } else if (response.error.includes('name') || response.error.includes('Name')) {
+          } else if (errorLower.includes('name')) {
             setErrors({ name: response.error });
+          } else if (errorLower.includes('rate limit') || errorLower.includes('too many')) {
+            showNotification('error', 'Too Many Attempts', response.error);
+          } else if (errorLower.includes('network') || errorLower.includes('connection')) {
+            showNotification('error', 'Connection Error', response.error);
           } else {
-            setGeneralError(response.error);
+            // Generic error
+            showNotification('error', 'Registration Failed', response.error);
           }
         }
-        if (response.warning) {
-          setGeneralError(response.warning);
-        }
+
+        // Log retry information if present
         if (response.retryAfter) {
-          // Optionally handle retry after delay
           console.log(`Retry after ${response.retryAfter} seconds`);
         }
       }
     } catch (error) {
       console.error('Registration error:', error);
-      setGeneralError('An unexpected error occurred. Please try again.');
+      showNotification(
+        'error',
+        'Connection Error',
+        'Unable to reach the server. Please check your connection and try again.'
+      );
     } finally {
       setIsLoading(false);
     }
@@ -91,10 +135,36 @@ export const EarlyAccessSection: React.FC = () => {
     if (errors[field]) {
       setErrors({ ...errors, [field]: undefined });
     }
-    if (generalError) {
-      setGeneralError('');
+  };
+
+  // Get notification styling based on type
+  const getNotificationStyles = () => {
+    switch (notification.type) {
+      case 'success':
+        return {
+          border: 'border-green-500/30',
+          bgIcon: 'bg-green-500/20',
+          iconColor: 'text-green-500',
+          icon: <Check className="w-5 h-5" />
+        };
+      case 'error':
+        return {
+          border: 'border-red-500/30',
+          bgIcon: 'bg-red-500/20',
+          iconColor: 'text-red-500',
+          icon: <X className="w-5 h-5" />
+        };
+      case 'warning':
+        return {
+          border: 'border-amber-500/30',
+          bgIcon: 'bg-amber-500/20',
+          iconColor: 'text-amber-500',
+          icon: <AlertCircle className="w-5 h-5" />
+        };
     }
   };
+
+  const notificationStyles = getNotificationStyles();
 
   return (
     <section id="early-access" className="py-20 relative items-center text-white">
@@ -231,12 +301,6 @@ export const EarlyAccessSection: React.FC = () => {
                   />
                 </div>
 
-                {generalError && (
-                  <div className="text-red-400 text-xs text-center bg-red-500/10 p-2 rounded-lg">
-                    {generalError}
-                  </div>
-                )}
-
                 <button 
                   type="submit"
                   aria-label="Early Access Submit"
@@ -283,20 +347,31 @@ export const EarlyAccessSection: React.FC = () => {
         </div>
       </div>
 
-      {/* Success Notification */}
-      <div className={`fixed bottom-5 right-5 bg-gray-900 border border-green-500/30 rounded-xl p-4 shadow-lg transition-all duration-300 z-50 ${showNotification ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'}`}>
-        <div className="flex items-center">
-          <div className="w-10 h-10 bg-green-500/20 rounded-full flex items-center justify-center mr-4">
-            <Check className="w-5 h-5 text-green-500" />
+      {/* Toast Notification */}
+      <div 
+        className={`fixed bottom-5 right-5 bg-gray-900 border ${notificationStyles.border} rounded-xl p-4 shadow-lg transition-all duration-300 z-50 max-w-md ${
+          notification.show ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4 pointer-events-none'
+        }`}
+      >
+        <div className="flex items-start">
+          <div className={`w-10 h-10 ${notificationStyles.bgIcon} rounded-full flex items-center justify-center mr-4 flex-shrink-0 ${notificationStyles.iconColor}`}>
+            {notificationStyles.icon}
           </div>
-          <div>
-            <h4 className="font-medium text-white">Success! 🎉</h4>
-            <p className="text-sm text-white/70">
-              {notificationMessage}
+          <div className="flex-1 min-w-0">
+            <h4 className="font-medium text-white mb-1">{notification.title}</h4>
+            <p className="text-sm text-white/70 break-words">
+              {notification.message}
             </p>
           </div>
+          <button
+            onClick={() => setNotification(prev => ({ ...prev, show: false }))}
+            className="ml-3 text-white/40 hover:text-white/60 transition-colors flex-shrink-0"
+            aria-label="Close notification"
+          >
+            <X className="w-4 h-4" />
+          </button>
         </div>
       </div>
     </section>
   );
-}
+};

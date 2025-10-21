@@ -46,7 +46,7 @@ export async function registerForEarlyAccess(
     }
 
     const response = await fetch(
-      `${env.SUPABASE_URL}/register-user`,
+      `${env.SUPABASE_URL}/functions/v1/register-user`,
       {
         method: 'POST',
         headers: {
@@ -87,4 +87,3 @@ export async function registerForEarlyAccess(
     };
   }
 }
-
