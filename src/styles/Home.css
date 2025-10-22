@@ -1,4 +1,4 @@
-nav, 
+nav,
 .hero-section,
 #how-it-works h2,
 #how-it-works h3 {
@@ -32,6 +32,20 @@ nav,
   opacity: 0.05;
   z-index: -2;
 }
+
+.gradient-text {
+  background: linear-gradient(90deg, #667eea, #764ba2, #f093fb);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-card {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
 
 @keyframes gradientShift {
   0% {

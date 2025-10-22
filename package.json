@@ -8,7 +8,6 @@
     "email": "tagticsdev@gmail.com",
     "url": "https://www.tagtics.online"
   },
-
   "scripts": {
     "dev": "pnpx vite",
     "build": "pnpx vite build",

@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
-Disallow: /admin/
-Disallow: /api/
+Sitemap: https://www.tagtics.online/sitemap.xml
+
+# Disallow admin/dashboard from crawling 
+Disallow: /dashboard

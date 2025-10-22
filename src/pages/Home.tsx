@@ -56,6 +56,27 @@ export default function Home() {
         <HowItWorksSection />
         <Footer />
         <Toaster position="top-right" />
+        <script type="application/ld+json">
+          {JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "SoftwareApplication",
+            "name": "Tagtics",
+            "applicationCategory": "DeveloperApplication",
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "description": "Visual UI feedback platform enabling element-level user insights for developers",
+            "url": "https://www.tagtics.online",
+            "screenshot": "https://www.tagtics.online/screenshot.png",
+            "operatingSystem": "Web",
+            "author": {
+              "@type": "Organization",
+              "name": "Tagtics"
+            }
+          })}
+        </script>
       </div>
     </div>
   )
