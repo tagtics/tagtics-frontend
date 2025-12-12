@@ -16,22 +16,15 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
         name: '',
         url: '',
         devName: '',
-        isLocal: false,
         tier: 'pro' as const
     });
 
     const [errors, setErrors] = useState<Record<string, string>>({});
 
-    const validateUrl = (url: string, isLocal: boolean): boolean => {
+    const validateUrl = (url: string): boolean => {
         if (!url) return false;
-
-        if (isLocal) {
-            // Allow localhost URLs
-            return /^https?:\/\/(localhost|127\.0\.0\.1)(:\d+)?/.test(url);
-        } else {
-            // Require valid domain
-            return /^https?:\/\/[a-zA-Z0-9-]+\.[a-zA-Z]{2,}/.test(url);
-        }
+        // Accept any valid URL (localhost or production)
+        return /^https?:\/\//.test(url);
     };
 
     const handleSubmit = (e: React.FormEvent) => {
@@ -47,10 +40,8 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
             newErrors.devName = 'Developer name is required';
         }
 
-        if (!validateUrl(formData.url, formData.isLocal)) {
-            newErrors.url = formData.isLocal
-                ? 'Please enter a valid localhost URL (e.g., http://localhost:3000)'
-                : 'Please enter a valid URL (e.g., https://example.com)';
+        if (!validateUrl(formData.url)) {
+            newErrors.url = 'Please enter a valid URL (e.g., https://example.com or http://localhost:3000)';
         }
 
         if (Object.keys(newErrors).length > 0) {
@@ -58,14 +49,16 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
             return;
         }
 
-        addProject(formData);
+        addProject({
+            ...formData,
+            isLocal: false // Default to false, can be enabled later in settings
+        });
 
         // Reset form
         setFormData({
             name: '',
             url: '',
             devName: '',
-            isLocal: false,
             tier: 'pro'
         });
         setErrors({});
@@ -151,7 +144,7 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
                                             "w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-500 outline-none transition-all",
                                             errors.url ? "border-red-500" : "border-white/10 focus:border-blue-500"
                                         )}
-                                        placeholder={formData.isLocal ? "http://localhost:3000" : "https://example.com"}
+                                        placeholder="https://example.com or http://localhost:3000"
                                     />
                                     {errors.url && (
                                         <p className="mt-1 text-sm text-red-400">{errors.url}</p>
@@ -178,19 +171,7 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
                                     )}
                                 </div>
 
-                                {/* Local Development Checkbox */}
-                                <div className="flex items-center gap-3 p-4 bg-white/5 rounded-xl border border-white/10">
-                                    <input
-                                        type="checkbox"
-                                        id="isLocal"
-                                        checked={formData.isLocal}
-                                        onChange={(e) => handleChange('isLocal', e.target.checked)}
-                                        className="w-4 h-4 rounded border-white/20 bg-white/10 text-blue-500 focus:ring-2 focus:ring-blue-500"
-                                    />
-                                    <label htmlFor="isLocal" className="text-sm text-gray-300 cursor-pointer">
-                                        Local Development (allows localhost URLs)
-                                    </label>
-                                </div>
+
 
                                 {/* Buttons */}
                                 <div className="flex gap-3 pt-4">
