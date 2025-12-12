@@ -1,7 +1,7 @@
 // Easter egg console art for Tagtics
 export const showEasterEgg = () => {
     const styles = {
-        ascii: 'font-size: 10px; color: #60a5fa; font-family: monospace; line-height: 1.2;',
+        ascii: 'font-size: 10px; font-weight: bold; background: linear-gradient(90deg, #667eea, #764ba2, #f093fb); -webkit-background-clip: text; background-clip: text; color: transparent; font-family: monospace; line-height: 1.2;',
         box: 'font-size: 12px; color: #9ca3af; line-height: 1.2;',
         tech: 'font-size: 11px; color: #9ca3af;'
     };
