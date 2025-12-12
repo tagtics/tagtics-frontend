@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { DemoPreview } from "../components/home/DemoPreview";
-import { EarlyAccessSection } from "../components/home/EarlyAccessSection";
 import { FeaturesSection } from "../components/home/FeaturesSection";
 import { HeroSection } from "../components/home/HeroSection";
 import { HowItWorksSection } from "../components/home/HowItWorksSection";
@@ -11,6 +10,7 @@ import { AnimatedBackground } from "../components/home/AnimatedBackground";
 import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import '../styles/Home.css';
+import Snowfall from "react-snowfall";
 
 
 export default function Home() {
@@ -44,6 +44,13 @@ export default function Home() {
       <AnimatedBackground />
       <div className="fixed inset-0 bg-black/60 z-5 pointer-events-none"></div>
 
+      {/* Snowfall - positioned above overlay */}
+      <Snowfall
+        color="white"
+        snowflakeCount={100}
+        style={{ position: 'fixed', width: '100vw', height: '100vh', zIndex: 8 }}
+      />
+
       {/* Foreground content */}
       <div className="relative z-10">
         <div className="absolute w-64 h-64 rounded-full  z-10 pointer-events-none bg-purple-500/20 blur-3xl -top-32 -left-32"></div>
@@ -51,7 +58,6 @@ export default function Home() {
 
         <HeroSection />
         <DemoPreview />
-        <EarlyAccessSection />
         <FeaturesSection />
         <HowItWorksSection />
         <Footer />

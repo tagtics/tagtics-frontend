@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { MenuIcon, XIcon } from 'lucide-react';
 import AOS from 'aos';
+import { isAuthenticated } from '../utils/auth';
 
 export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-   // Reset menu when viewport changes to desktop size
+  // Reset menu when viewport changes to desktop size
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 768) {
@@ -45,22 +46,12 @@ export const Navbar: React.FC = () => {
       </div>
       <div className={`md:flex md:space-x-8 md:items-center ${isMenuOpen ? 'flex flex-col absolute top-16 left-0 right-0 bg-black/90 p-6 space-y-4 space-x-0' : 'hidden'}`}>
         {/* Early Access with Elegant Glow for Dark UI */}
-        <a
-          href="#early-access"
-          aria-label='Link to Early Access Section' 
-          onClick={(e) => handleClick(e, '#early-access')}
-          className="relative flex items-center gap-2 font-semibold transition-all duration-300 hover:scale-[1.05] group"
-        >
-          <span className="relative">
-            <span className="bg-gradient-to-r from-amber-200 via-yellow-300 to-orange-400 bg-clip-text text-transparent drop-shadow-[0_0_6px_rgba(255,200,100,0.4)]">
-              Early Access
-            </span>
-            {/* Animated underline glow */}
-            <span className="absolute left-0 bottom-[-3px] w-0 h-[2px] bg-gradient-to-r from-yellow-400 via-orange-400 to-pink-500 rounded-full shadow-[0_0_8px_rgba(255,180,100,0.6)] transition-all duration-500 group-hover:w-full"></span>
-          </span>
 
-          {/* Soft glowing pulse orb */}
-          <span className="relative w-2.5 h-2.5 rounded-full bg-gradient-to-br from-yellow-400 to-pink-500 shadow-[0_0_8px_rgba(255,180,100,0.8)] animate-pulse-slow after:content-[''] after:absolute after:inset-0 after:rounded-full after:bg-gradient-to-br after:from-yellow-400/40 after:to-pink-500/40 after:blur-md after:animate-ping-slow"></span>
+        <a
+          href="/dashboard"
+          className="px-5 py-2 rounded-full bg-white/10 hover:bg-white/20 border border-white/10 transition-all duration-300 backdrop-blur-sm text-sm font-medium"
+        >
+          {isAuthenticated ? 'Dashboard' : 'Login'}
         </a>
         <a href="#demo-section" aria-label='Link to Demo Section' className="text-white/80 hover:text-white transition-colors duration-300" onClick={(e) => handleClick(e, '#demo-section')}>
           Demo
