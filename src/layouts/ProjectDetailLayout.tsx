@@ -55,7 +55,7 @@ export function ProjectDetailLayout() {
                             {project.isLocal && (
                                 <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-blue-500/20 text-blue-400 border border-blue-500/40 text-xs font-medium">
                                     <span className="w-1.5 h-1.5 rounded-full bg-blue-400 animate-pulse"></span>
-                                    Testing Mode • Port {project.localPort || '3000'}
+                                    Local • Port : {project.localPort || '3000'}
                                 </span>
                             )}
                         </div>

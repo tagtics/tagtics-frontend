@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react';
 import { MOCK_PROJECTS, MOCK_FEEDBACKS } from '../../data/mock';
 import { Activity, CheckCircle, FolderKanban, MessageSquare, TrendingUp } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
@@ -14,6 +15,14 @@ const trendData = [
 ];
 
 export default function Overview() {
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        // Delay rendering chart to allow container layout to settle
+        const timer = setTimeout(() => setIsMounted(true), 100);
+        return () => clearTimeout(timer);
+    }, []);
+
     const totalProjects = MOCK_PROJECTS.length;
     const totalFeedback = MOCK_FEEDBACKS.length;
     const resolvedFeedback = MOCK_FEEDBACKS.filter(f => f.status === 'resolved').length;
@@ -42,7 +51,6 @@ export default function Overview() {
                 {stats.map((stat, i) => (
                     <motion.div
                         key={stat.label}
-                        initial={{ opacity: 0, y: 20 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ delay: i * 0.1 }}
                         className={`relative p-4 rounded-2xl border border-white/10 bg-gradient-to-br ${stat.from} ${stat.to} backdrop-blur-md overflow-hidden group`}
@@ -66,7 +74,6 @@ export default function Overview() {
 
             {/* Chart Section */}
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
                 className="p-5 rounded-3xl border border-white/10 bg-black/40 backdrop-blur-md"
@@ -80,53 +87,55 @@ export default function Overview() {
                 </div>
 
                 <div className="h-[220px] w-full">
-                    <ResponsiveContainer width="100%" height="100%">
-                        <AreaChart data={trendData}>
-                            <defs>
-                                <linearGradient id="colorActive" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#60A5FA" stopOpacity={0.3} />
-                                    <stop offset="95%" stopColor="#60A5FA" stopOpacity={0} />
-                                </linearGradient>
-                                <linearGradient id="colorResolved" x1="0" y1="0" x2="0" y2="1">
-                                    <stop offset="5%" stopColor="#4ADE80" stopOpacity={0.3} />
-                                    <stop offset="95%" stopColor="#4ADE80" stopOpacity={0} />
-                                </linearGradient>
-                            </defs>
-                            <XAxis
-                                dataKey="name"
-                                stroke="#666"
-                                tickLine={false}
-                                axisLine={false}
-                                dy={10}
-                            />
-                            <YAxis
-                                stroke="#666"
-                                tickLine={false}
-                                axisLine={false}
-                                dx={-10}
-                            />
-                            <Tooltip
-                                contentStyle={{ backgroundColor: '#000', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
-                                itemStyle={{ color: '#fff' }}
-                            />
-                            <Area
-                                type="monotone"
-                                dataKey="active"
-                                stroke="#60A5FA"
-                                strokeWidth={3}
-                                fillOpacity={1}
-                                fill="url(#colorActive)"
-                            />
-                            <Area
-                                type="monotone"
-                                dataKey="resolved"
-                                stroke="#4ADE80"
-                                strokeWidth={3}
-                                fillOpacity={1}
-                                fill="url(#colorResolved)"
-                            />
-                        </AreaChart>
-                    </ResponsiveContainer>
+                    {isMounted && (
+                        <ResponsiveContainer width="100%" height={220}>
+                            <AreaChart data={trendData}>
+                                <defs>
+                                    <linearGradient id="colorActive" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#60A5FA" stopOpacity={0.3} />
+                                        <stop offset="95%" stopColor="#60A5FA" stopOpacity={0} />
+                                    </linearGradient>
+                                    <linearGradient id="colorResolved" x1="0" y1="0" x2="0" y2="1">
+                                        <stop offset="5%" stopColor="#4ADE80" stopOpacity={0.3} />
+                                        <stop offset="95%" stopColor="#4ADE80" stopOpacity={0} />
+                                    </linearGradient>
+                                </defs>
+                                <XAxis
+                                    dataKey="name"
+                                    stroke="#666"
+                                    tickLine={false}
+                                    axisLine={false}
+                                    dy={10}
+                                />
+                                <YAxis
+                                    stroke="#666"
+                                    tickLine={false}
+                                    axisLine={false}
+                                    dx={-10}
+                                />
+                                <Tooltip
+                                    contentStyle={{ backgroundColor: '#000', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '12px' }}
+                                    itemStyle={{ color: '#fff' }}
+                                />
+                                <Area
+                                    type="monotone"
+                                    dataKey="active"
+                                    stroke="#60A5FA"
+                                    strokeWidth={3}
+                                    fillOpacity={1}
+                                    fill="url(#colorActive)"
+                                />
+                                <Area
+                                    type="monotone"
+                                    dataKey="resolved"
+                                    stroke="#4ADE80"
+                                    strokeWidth={3}
+                                    fillOpacity={1}
+                                    fill="url(#colorResolved)"
+                                />
+                            </AreaChart>
+                        </ResponsiveContainer>
+                    )}
                 </div>
             </motion.div>
         </div>

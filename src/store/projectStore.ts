@@ -1,5 +1,7 @@
 import { create } from 'zustand';
-import { v4 as uuidv4 } from 'uuid';
+
+// Helper to generate random ID
+const generateId = () => Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
 export interface Project {
     id: string;
@@ -30,7 +32,7 @@ interface ProjectStore {
 
 // Helper to generate API key
 const generateApiKey = (): string => {
-    return `tk_${uuidv4().replace(/-/g, '')}`;
+    return `tk_${generateId()}${generateId()}`;
 };
 
 export const useProjectStore = create<ProjectStore>((set, get) => ({
@@ -53,7 +55,7 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
     addProject: (projectData) => {
         const newProject: Project = {
             ...projectData,
-            id: uuidv4(),
+            id: generateId(),
             apiKey: generateApiKey(),
             createdAt: new Date().toISOString(),
             feedbackCount: 0,

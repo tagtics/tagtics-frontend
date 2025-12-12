@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useProjectStore } from '../../store/projectStore';
-import { Eye, EyeOff, RefreshCw, Trash2, Save } from 'lucide-react';
+import { Eye, EyeOff, RefreshCw, Trash2, Save, Check, Copy, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '../../utils/cn';
 
@@ -26,6 +26,9 @@ export default function ProjectSettings() {
     const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
     const [showRegenerateConfirm, setShowRegenerateConfirm] = useState(false);
     const [isSaved, setIsSaved] = useState(false);
+    const [hasCopied, setHasCopied] = useState(false);
+
+    const [errors, setErrors] = useState<Record<string, string>>({});
 
     useEffect(() => {
         if (project) {
@@ -36,6 +39,8 @@ export default function ProjectSettings() {
                 devName: project.devName,
                 isLocal: project.isLocal
             });
+            // Clear errors when project changes/resets
+            setErrors({});
         }
     }, [project]);
 
@@ -56,7 +61,30 @@ export default function ProjectSettings() {
         );
     }
 
+    const validateForm = (): boolean => {
+        const newErrors: Record<string, string> = {};
+
+        if (!formData.name.trim()) {
+            newErrors.name = 'Project name is required';
+        }
+
+        if (!formData.devName.trim()) {
+            newErrors.devName = 'Developer name is required';
+        }
+
+        if (formData.isLocal && formData.localPort) {
+            if (!/^\d+$/.test(formData.localPort)) {
+                newErrors.localPort = 'Port must be a number';
+            }
+        }
+
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
+
     const handleSave = () => {
+        if (!validateForm()) return;
+
         updateProject(project.id, formData);
         setIsSaved(true);
         setTimeout(() => setIsSaved(false), 2000);
@@ -75,50 +103,77 @@ export default function ProjectSettings() {
 
     const copyToClipboard = () => {
         navigator.clipboard.writeText(project.apiKey);
+        setHasCopied(true);
+        setTimeout(() => setHasCopied(false), 2000);
+    };
+
+    const handleChange = (field: string, value: any) => {
+        setFormData(prev => ({ ...prev, [field]: value }));
+        // Clear error for field
+        if (errors[field]) {
+            setErrors(prev => {
+                const newErrors = { ...prev };
+                delete newErrors[field];
+                return newErrors;
+            });
+        }
     };
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-6xl mx-auto w-full">
             {/* Left Column: Project Details Form */}
             <motion.div
-                initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md space-y-4"
+                className="p-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md space-y-3"
             >
                 <h2 className="text-base font-bold text-white mb-4">Project Details</h2>
 
                 {/* Project Name */}
                 <div>
-                    <label className="block text-xs font-medium text-gray-300 mb-1.5">
-                        Project Name
-                    </label>
+                    <div className="flex justify-between mb-1.5">
+                        <label className="block text-xs font-medium text-gray-300">
+                            Project Name
+                        </label>
+                        <span className="text-[10px] text-gray-500">
+                            {formData.name.length}/30
+                        </span>
+                    </div>
                     <input
                         type="text"
+                        maxLength={30}
                         value={formData.name}
-                        onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                        className="w-full px-3 py-2 bg-white/5 border border-white/10 focus:border-blue-500 rounded-lg text-sm text-white placeholder-gray-500 outline-none transition-all"
+                        onChange={(e) => handleChange('name', e.target.value)}
+                        className={cn(
+                            "w-full px-3 py-2 bg-white/5 border rounded-lg text-sm text-white placeholder-gray-500 outline-none transition-all",
+                            errors.name ? "border-red-500" : "border-white/10 focus:border-blue-500"
+                        )}
                     />
+                    {errors.name && (
+                        <p className="mt-1 text-[10px] text-red-400">{errors.name}</p>
+                    )}
                 </div>
 
                 {/* Website URL */}
                 <div>
-                    <label className="block text-xs font-medium text-gray-300 mb-1.5">
-                        Website URL
-                    </label>
+                    <div className="flex items-center justify-between mb-1.5">
+                        <label className="block text-xs font-medium text-gray-300">
+                            Website URL
+                        </label>
+                        <span className="text-[10px] text-gray-500 flex items-center gap-1">
+                            <Lock className="w-3 h-3" />
+                            Read-only
+                        </span>
+                    </div>
                     <input
                         type="text"
                         value={formData.url}
-                        onChange={(e) => setFormData({ ...formData, url: e.target.value })}
-                        placeholder="https://example.com"
-                        className="w-full px-3 py-2 bg-white/5 border border-white/10 focus:border-blue-500 rounded-lg text-sm text-white placeholder-gray-500 outline-none transition-all"
+                        readOnly
+                        className="w-full px-3 py-2 bg-black/20 border border-white/5 rounded-lg text-sm text-gray-400 cursor-not-allowed outline-none font-mono"
                     />
-                    <p className="text-[10px] text-gray-500 mt-1">
-                        Enter your production website URL
-                    </p>
                 </div>
 
                 {/* Local Testing Configuration */}
-                <div className="space-y-3 p-4 bg-white/5 rounded-lg border border-white/10">
+                <div className="space-y-2 p-3 bg-white/5 rounded-lg border border-white/10">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <div className={cn(
@@ -131,7 +186,7 @@ export default function ProjectSettings() {
                         </div>
                         <button
                             type="button"
-                            onClick={() => setFormData({ ...formData, isLocal: !formData.isLocal })}
+                            onClick={() => handleChange('isLocal', !formData.isLocal)}
                             className={cn(
                                 "relative inline-flex h-5 w-9 items-center rounded-full transition-colors",
                                 formData.isLocal ? "bg-blue-600" : "bg-gray-600"
@@ -148,16 +203,28 @@ export default function ProjectSettings() {
 
                     {formData.isLocal && (
                         <div className="space-y-2 pt-2 border-t border-white/10">
-                            <label className="block text-xs font-medium text-gray-300">
-                                Localhost Port
-                            </label>
+                            <div className="flex justify-between mb-1">
+                                <label className="block text-xs font-medium text-gray-300">
+                                    Localhost Port
+                                </label>
+                                <span className="text-[10px] text-gray-500">
+                                    {formData.localPort.length}/5
+                                </span >
+                            </div>
                             <input
                                 type="text"
+                                maxLength={5}
                                 value={formData.localPort || ''}
-                                onChange={(e) => setFormData({ ...formData, localPort: e.target.value })}
+                                onChange={(e) => handleChange('localPort', e.target.value)}
                                 placeholder="3000"
-                                className="w-full px-3 py-2 bg-white/5 border border-white/10 focus:border-blue-500 rounded-lg text-sm text-white placeholder-gray-500 outline-none transition-all"
+                                className={cn(
+                                    "w-full px-3 py-2 bg-white/5 border rounded-lg text-sm text-white placeholder-gray-500 outline-none transition-all",
+                                    errors.localPort ? "border-red-500" : "border-white/10 focus:border-blue-500"
+                                )}
                             />
+                            {errors.localPort && (
+                                <p className="text-[10px] text-red-400">{errors.localPort}</p>
+                            )}
                             <div className="p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg">
                                 <p className="text-[10px] text-blue-400 leading-relaxed">
                                     📍 Testing URL: <span className="font-mono">http://localhost:{formData.localPort || '3000'}</span>
@@ -172,15 +239,27 @@ export default function ProjectSettings() {
 
                 {/* Developer Name */}
                 <div>
-                    <label className="block text-xs font-medium text-gray-300 mb-1.5">
-                        Developer Name
-                    </label>
+                    <div className="flex justify-between mb-1.5">
+                        <label className="block text-xs font-medium text-gray-300 mb-1.5">
+                            Developer Name
+                        </label>
+                        <span className="text-[10px] text-gray-500">
+                            {formData.devName.length}/30
+                        </span>
+                    </div>
                     <input
                         type="text"
+                        maxLength={30}
                         value={formData.devName}
-                        onChange={(e) => setFormData({ ...formData, devName: e.target.value })}
-                        className="w-full px-3 py-2 bg-white/5 border border-white/10 focus:border-blue-500 rounded-lg text-sm text-white placeholder-gray-500 outline-none transition-all"
+                        onChange={(e) => handleChange('devName', e.target.value)}
+                        className={cn(
+                            "w-full px-3 py-2 bg-white/5 border rounded-lg text-sm text-white placeholder-gray-500 outline-none transition-all",
+                            errors.devName ? "border-red-500" : "border-white/10 focus:border-blue-500"
+                        )}
                     />
+                    {errors.devName && (
+                        <p className="mt-1 text-[10px] text-red-400">{errors.devName}</p>
+                    )}
                 </div>
 
                 {/* Save Button */}
@@ -208,7 +287,6 @@ export default function ProjectSettings() {
             <div className="space-y-4">
                 {/* API Key Section */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
                     className="p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md space-y-4"
@@ -228,9 +306,24 @@ export default function ProjectSettings() {
                                 </button>
                                 <button
                                     onClick={copyToClipboard}
-                                    className="px-2 py-1.5 rounded text-xs text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+                                    className={cn(
+                                        "px-2 py-1.5 rounded text-xs transition-all flex items-center gap-1.5 font-medium",
+                                        hasCopied
+                                            ? "text-green-400 bg-green-400/10"
+                                            : "text-gray-400 hover:text-white hover:bg-white/10"
+                                    )}
                                 >
-                                    Copy
+                                    {hasCopied ? (
+                                        <>
+                                            <Check className="w-3 h-3" />
+                                            Copied
+                                        </>
+                                    ) : (
+                                        <>
+                                            <Copy className="w-3 h-3" />
+                                            Copy
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         </div>
@@ -273,7 +366,6 @@ export default function ProjectSettings() {
 
                 {/* Danger Zone */}
                 <motion.div
-                    initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
                     className="p-5 rounded-2xl border border-red-500/30 bg-red-600/5 backdrop-blur-md space-y-4"

@@ -2,16 +2,19 @@ import React from 'react';
 import './index.css';
 import { createRoot } from 'react-dom/client';
 import { AppRouter } from './AppRouter';
-import Tagtics from 'tagtics-client'; // Import it
+import { showEasterEgg } from './utils/easterEgg';
+// import Tagtics from 'tagtics-client'; // Import it
 
 // Initialize Tagtics here
-Tagtics.init({
-  apiKey: 'TEST_KEY',
-  excludePaths: ['.*'],  // Show everywhere
-  privacyNotice: 'Custom privacy notice for testing',
-  serializeChildDepth: 2,
-  allowSensitivePages: true,  // Test on all pages
-});
+// Tagtics.init({
+//   apiKey: 'TEST_KEY',
+//   excludePaths: ['.*'],  // Show everywhere
+//   privacyNotice: 'Custom privacy notice for testing',
+//   serializeChildDepth: 2,
+//   allowSensitivePages: true,  // Test on all pages
+// });
+
+showEasterEgg();
 
 const rootElement = document.getElementById('root');
 if (rootElement) {

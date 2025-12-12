@@ -113,11 +113,17 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
                             <form onSubmit={handleSubmit} className="space-y-5">
                                 {/* Project Name */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                                        Project Name *
-                                    </label>
+                                    <div className="flex justify-between mb-2">
+                                        <label className="block text-sm font-medium text-gray-300">
+                                            Project Name *
+                                        </label>
+                                        <span className="text-xs text-gray-500">
+                                            {formData.name.length}/30
+                                        </span>
+                                    </div>
                                     <input
                                         type="text"
+                                        maxLength={30}
                                         value={formData.name}
                                         onChange={(e) => handleChange('name', e.target.value)}
                                         className={cn(
@@ -133,11 +139,17 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
 
                                 {/* Website URL */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                                        Website URL *
-                                    </label>
+                                    <div className="flex justify-between mb-2">
+                                        <label className="block text-sm font-medium text-gray-300">
+                                            Website URL *
+                                        </label>
+                                        <span className="text-xs text-gray-500">
+                                            {formData.url.length}/100
+                                        </span>
+                                    </div>
                                     <input
                                         type="text"
+                                        maxLength={100}
                                         value={formData.url}
                                         onChange={(e) => handleChange('url', e.target.value)}
                                         className={cn(
@@ -153,11 +165,17 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
 
                                 {/* Developer Name */}
                                 <div>
-                                    <label className="block text-sm font-medium text-gray-300 mb-2">
-                                        Developer Name *
-                                    </label>
+                                    <div className="flex justify-between mb-2">
+                                        <label className="block text-sm font-medium text-gray-300">
+                                            Developer Name *
+                                        </label>
+                                        <span className="text-xs text-gray-500">
+                                            {formData.devName.length}/30
+                                        </span>
+                                    </div>
                                     <input
                                         type="text"
+                                        maxLength={30}
                                         value={formData.devName}
                                         onChange={(e) => handleChange('devName', e.target.value)}
                                         className={cn(

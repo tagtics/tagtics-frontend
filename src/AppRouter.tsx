@@ -14,6 +14,7 @@ export function AppRouter() {
   return <BrowserRouter
     future={{
       v7_startTransition: true,
+      v7_relativeSplatPath: true,
     }}
   >
     <Suspense fallback={<LoadingFallback />}>
@@ -37,6 +38,6 @@ export function AppRouter() {
 
         <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
-    </Suspense >
+    </Suspense>
   </BrowserRouter>;
 }
