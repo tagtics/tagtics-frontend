@@ -73,8 +73,8 @@ export const HowItWorksSection: React.FC = () => {
                         key={index}
                         onClick={() => handleDotClick(index)}
                         className={`h-2.5 rounded-full transition-all duration-300 ${index === activeStep
-                            ? 'w-6 bg-gradient-to-r from-blue-500 to-purple-600'
-                            : 'w-2 bg-gray-300 dark:bg-white/30 hover:bg-gray-400 dark:hover:bg-white/50'
+                          ? 'w-6 bg-gradient-to-r from-blue-500 to-purple-600'
+                          : 'w-2 bg-gray-300 dark:bg-white/30 hover:bg-gray-400 dark:hover:bg-white/50'
                           }`}
                         aria-label={`Go to step ${index + 1}`}
                       />
@@ -91,10 +91,10 @@ export const HowItWorksSection: React.FC = () => {
                       </div>
                     </div>
 
-                    <h4 className="text-xl md:text-2xl font-bold mb-3">
+                    <h4 className="text-xl md:text-2xl font-bold mb-3 text-gray-900 dark:text-white">
                       {steps[activeStep].title}
                     </h4>
-                    <p className="text-white/80 text-base md:text-lg leading-relaxed">
+                    <p className="text-gray-600 dark:text-white/80 text-base md:text-lg leading-relaxed">
                       {steps[activeStep].description}
                     </p>
                   </div>
@@ -103,14 +103,14 @@ export const HowItWorksSection: React.FC = () => {
                   <div className="flex gap-3 mt-6">
                     <button
                       onClick={handlePrev}
-                      className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/10 hover:scale-105"
+                      className="flex items-center justify-center w-10 h-10 rounded-full bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-black/5 dark:border-white/10 hover:scale-105 text-gray-700 dark:text-white"
                       aria-label="Previous step"
                     >
                       <ChevronLeft className="w-4 h-4" />
                     </button>
                     <button
                       onClick={handleNext}
-                      className="flex items-center justify-center w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/10 hover:scale-105"
+                      className="flex items-center justify-center w-10 h-10 rounded-full bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-black/5 dark:border-white/10 hover:scale-105 text-gray-700 dark:text-white"
                       aria-label="Next step"
                     >
                       <ChevronRight className="w-4 h-4" />
@@ -118,7 +118,7 @@ export const HowItWorksSection: React.FC = () => {
                     <button
                       aria-label="Pause or Auto Play"
                       onClick={() => setIsAutoPlaying(!isAutoPlaying)}
-                      className="ml-auto px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/10 text-xs md:text-sm font-medium"
+                      className="ml-auto px-4 py-2 rounded-full bg-black/5 hover:bg-black/10 dark:bg-white/10 dark:hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-black/5 dark:border-white/10 text-xs md:text-sm font-medium text-gray-700 dark:text-white"
                     >
                       {isAutoPlaying ? 'Pause' : 'Auto Play'}
                     </button>
@@ -129,12 +129,12 @@ export const HowItWorksSection: React.FC = () => {
           </div>
 
           {/* Right side - AI Analysis */}
-          <div className="glass-card rounded-xl overflow-hidden flex flex-col" data-aos="fade-left">
+          <div className="bg-white/50 dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/10 rounded-xl overflow-hidden flex flex-col shadow-sm dark:shadow-none" data-aos="fade-left">
             <div className="p-6 md:p-8 flex flex-col h-full">
-              <h3 className="text-xl md:text-2xl font-bold mb-4">
+              <h3 className="text-xl md:text-2xl font-bold mb-4 text-gray-900 dark:text-white">
                 AI-Powered Analysis
               </h3>
-              <p className="text-white/80 mb-6 text-base md:text-lg">
+              <p className="text-gray-600 dark:text-white/80 mb-6 text-base md:text-lg">
                 Our system automatically categorizes feedback, detects duplicates, and surfaces the most critical issues first.
               </p>
 
@@ -160,7 +160,7 @@ export const HowItWorksSection: React.FC = () => {
                       ].map(({ label, value, color }) => (
                         <div key={label}>
                           <div className="flex justify-between mb-1">
-                            <span className="text-xs text-white/80">{label}</span>
+                            <span className="text-xs text-gray-600 dark:text-white/80">{label}</span>
                             <span className="text-xs font-medium">{value}%</span>
                           </div>
                           <div className="w-full bg-gray-800 rounded-full h-1.5">
