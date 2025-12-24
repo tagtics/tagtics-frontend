@@ -14,7 +14,7 @@ interface BreadcrumbsProps {
 export default function Breadcrumbs({ items }: BreadcrumbsProps) {
     return (
         <nav className="flex" aria-label="Breadcrumb">
-            <ol className="inline-flex items-center space-x-1 md:space-x-2">
+            <ol className="inline-flex items-center space-x-1 md:space-x-2 flex-wrap">
 
                 {items.map((item, index) => (
                     <li key={item.label} className="flex items-center">
