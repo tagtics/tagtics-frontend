@@ -48,10 +48,10 @@ export const HowItWorksSection: React.FC = () => {
     <section id="how-it-works" className="py-12 md:py-16 relative">
       <div className="max-w-7xl mx-auto px-4 md:px-6">
         <div className="text-center mb-12 md:mb-16" data-aos="fade-up">
-          <h2 className="text-2xl md:text-4xl font-bold mb-3">
+          <h2 className="text-2xl md:text-4xl font-bold mb-3 text-gray-900 dark:text-white">
             How Tagtics Works
           </h2>
-          <p className="text-base md:text-lg text-white/80 max-w-2xl mx-auto">
+          <p className="text-base md:text-lg text-gray-600 dark:text-white/80 max-w-2xl mx-auto">
             A seamless process from user feedback to developer action.
           </p>
         </div>
@@ -59,7 +59,7 @@ export const HowItWorksSection: React.FC = () => {
         <div className="grid lg:grid-cols-2 gap-8 items-stretch">
           {/* Left side - Carousel */}
           <div className="relative flex" data-aos="fade-right">
-            <div className="glass-card rounded-xl p-6 md:p-8 relative overflow-hidden w-full flex flex-col">
+            <div className="bg-white/50 dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/10 rounded-xl p-6 md:p-8 relative overflow-hidden w-full flex flex-col shadow-sm dark:shadow-none">
               {/* Background decoration */}
               <div className="absolute top-0 right-0 w-24 h-24 bg-purple-500/10 rounded-full blur-3xl"></div>
               <div className="absolute bottom-0 left-0 w-28 h-28 bg-blue-500/10 rounded-full blur-3xl"></div>
@@ -72,11 +72,10 @@ export const HowItWorksSection: React.FC = () => {
                       <button
                         key={index}
                         onClick={() => handleDotClick(index)}
-                        className={`h-2.5 rounded-full transition-all duration-300 ${
-                          index === activeStep
+                        className={`h-2.5 rounded-full transition-all duration-300 ${index === activeStep
                             ? 'w-6 bg-gradient-to-r from-blue-500 to-purple-600'
-                            : 'w-2 bg-white/30 hover:bg-white/50'
-                        }`}
+                            : 'w-2 bg-gray-300 dark:bg-white/30 hover:bg-gray-400 dark:hover:bg-white/50'
+                          }`}
                         aria-label={`Go to step ${index + 1}`}
                       />
                     ))}
@@ -117,7 +116,7 @@ export const HowItWorksSection: React.FC = () => {
                       <ChevronRight className="w-4 h-4" />
                     </button>
                     <button
-                     aria-label="Pause or Auto Play"
+                      aria-label="Pause or Auto Play"
                       onClick={() => setIsAutoPlaying(!isAutoPlaying)}
                       className="ml-auto px-4 py-2 rounded-full bg-white/10 hover:bg-white/20 transition-all duration-300 backdrop-blur-sm border border-white/10 text-xs md:text-sm font-medium"
                     >
@@ -143,14 +142,14 @@ export const HowItWorksSection: React.FC = () => {
                 <div className="w-full">
                   <div className="absolute -top-3 -left-3 w-20 h-20 bg-purple-500/20 rounded-full blur-2xl"></div>
                   <div className="absolute -bottom-3 -right-3 w-20 h-20 bg-blue-500/20 rounded-full blur-2xl"></div>
-                  <div className="relative bg-gray-900/50 rounded-lg p-4 md:p-5 shadow-md border border-white/5">
+                  <div className="relative bg-white dark:bg-gray-900/50 rounded-lg p-4 md:p-5 shadow-md border border-gray-200 dark:border-white/5">
                     <div className="flex items-center mb-4">
                       <div className="w-10 h-10 rounded-full bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center text-white mr-3">
                         <Activity className="w-5 h-5" />
                       </div>
                       <div>
-                        <h4 className="font-bold text-base md:text-lg">Feedback Analysis</h4>
-                        <p className="text-xs text-white/60">5 new high-priority items</p>
+                        <h4 className="font-bold text-base md:text-lg text-gray-900 dark:text-white">Feedback Analysis</h4>
+                        <p className="text-xs text-gray-500 dark:text-white/60">5 new high-priority items</p>
                       </div>
                     </div>
                     <div className="space-y-3">

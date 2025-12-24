@@ -215,7 +215,7 @@ export const DemoPreview: React.FC = () => {
           <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 gradient-text">
             Try Our Interactive Demo
           </h2>
-          <p className="text-lg md:text-xl text-white/80 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-gray-600 dark:text-white/80 max-w-3xl mx-auto">
             Experience Tagtics in action! Click the feedback icon to select elements and share your thoughts.
           </p>
         </div>
@@ -237,7 +237,7 @@ export const DemoPreview: React.FC = () => {
             className={`relative h-80 md:h-96 ${feedbackMode ? 'feedback-active' : ''}`}
             id="demo-container"
           >
-            <div className="w-full h-full bg-gradient-to-br from-slate-900 to-slate-800 p-6 md:p-8 overflow-hidden">
+            <div className="w-full h-full bg-white dark:bg-gradient-to-br dark:from-slate-900 dark:to-slate-800 p-6 md:p-8 overflow-hidden transition-colors duration-300">
 
               {/* Demo Header */}
               <div
@@ -246,10 +246,10 @@ export const DemoPreview: React.FC = () => {
                 onClick={handleElementClick}
               >
                 <div>
-                  <h3 className="text-2xl md:text-3xl font-bold text-white mb-2">
+                  <h3 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">
                     TaskFlow Pro
                   </h3>
-                  <p className="text-slate-400 text-sm md:text-base">
+                  <p className="text-gray-500 dark:text-slate-400 text-sm md:text-base">
                     Streamline your productivity
                   </p>
                 </div>
@@ -262,7 +262,7 @@ export const DemoPreview: React.FC = () => {
                     Login
                   </button>
                   <button aria-label="Demo Webpage Component"
-                    className={`px-4 py-2 border border-slate-600 text-white rounded-lg hover:bg-slate-700 transition-colors demo-element text-sm ${isSelected(document.querySelector('[data-element="signup-button"]'))}`}
+                    className={`px-4 py-2 border border-gray-200 dark:border-slate-600 text-gray-700 dark:text-white rounded-lg hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors demo-element text-sm ${isSelected(document.querySelector('[data-element="signup-button"]'))}`}
                     data-element="signup-button"
                     onClick={handleElementClick}
                   >
@@ -276,13 +276,13 @@ export const DemoPreview: React.FC = () => {
                 {['tasks-card', 'projects-card', 'team-card'].map(id => (
                   <div
                     key={id}
-                    className={`bg-slate-800 p-4 md:p-6 rounded-xl demo-element ${isSelected(document.querySelector(`[data-element="${id}"]`))}`}
+                    className={`bg-gray-50 dark:bg-slate-800 border border-gray-100 dark:border-transparent p-4 md:p-6 rounded-xl demo-element ${isSelected(document.querySelector(`[data-element="${id}"]`))}`}
                     data-element={id}
                     onClick={handleElementClick}
                   >
-                    <h4 className="font-semibold text-white">{id.replace('-', ' ').toUpperCase()}</h4>
-                    <p className="text-2xl font-bold text-white mb-1">Sample Value</p>
-                    <p className="text-sm text-slate-400">Description</p>
+                    <h4 className="font-semibold text-gray-900 dark:text-white">{id.replace('-', ' ').toUpperCase()}</h4>
+                    <p className="text-2xl font-bold text-gray-900 dark:text-white mb-1">Sample Value</p>
+                    <p className="text-sm text-gray-500 dark:text-slate-400">Description</p>
                   </div>
                 ))}
               </div>
@@ -380,7 +380,7 @@ export const DemoPreview: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-medium text-sm mb-1">Give Feedback</div>
+                    <div className="font-medium text-sm mb-1 text-white">Give Feedback</div>
                     <div className="text-xs text-white/80">
                       Click this icon to start giving feedback
                     </div>
@@ -399,7 +399,7 @@ export const DemoPreview: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-medium text-sm mb-1">Select Elements</div>
+                    <div className="font-medium text-sm mb-1 text-white">Select Elements</div>
                     <div className="text-xs text-white/80">
                       Click elements to select them for feedback, or click the feedback icon again for general page feedback
                     </div>
@@ -418,7 +418,7 @@ export const DemoPreview: React.FC = () => {
                     </svg>
                   </div>
                   <div>
-                    <div className="font-medium text-sm mb-1">Submit Feedback</div>
+                    <div className="font-medium text-sm mb-1 text-white">Submit Feedback</div>
                     <div className="text-xs text-white/80">
                       Click the icon again to submit your feedback
                     </div>

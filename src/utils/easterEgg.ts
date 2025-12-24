@@ -22,7 +22,7 @@ export const showEasterEgg = () => {
         `\n│  Real-time feedback from real users │` +
         `\n└─────────────────────────────────────┘` +
         `\n\n%c Built with React + Zustand + TypeScript + Vite` +
-        `\n Powered by Framer Motion, AOS, Vanta & Tailwind CSS`,
+        `\n Powered by Framer Motion, AOS, Lucide-react, Vanta & Tailwind CSS`,
 
         styles.ascii,
         styles.box,

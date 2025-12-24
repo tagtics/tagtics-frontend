@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { DemoPreview } from "../components/home/DemoPreview";
@@ -11,10 +11,31 @@ import { Footer } from "../components/Footer";
 import { Navbar } from "../components/Navbar";
 import '../styles/Home.css';
 import Snowfall from "react-snowfall";
+import SEO from "../components/common/SEO";
+
 
 
 export default function Home() {
+  const [isDark, setIsDark] = useState(true);
+
   useEffect(() => {
+    // Initial check
+    setIsDark(document.documentElement.classList.contains('dark'));
+
+    // Observer for theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          setIsDark(document.documentElement.classList.contains('dark'));
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+
     // Initialize AOS
     AOS.init({
       duration: 500,
@@ -32,21 +53,26 @@ export default function Home() {
       window.removeEventListener('resize', refresh);
       window.removeEventListener('orientationchange', refresh);
       window.removeEventListener('hashchange', refresh);
+      observer.disconnect();
     };
   }, []);
 
 
   return (
 
-    <div className="relative min-h-screen bg-black text-white overflow-hidden">
+    <div className="relative min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white overflow-hidden transition-colors duration-300">
+      <SEO
+        title="Home"
+        description="Tagtics is the visual feedback tool for developers. Get element-level insights, bug reports, and feature requests directly from your live website."
+      />
       <Navbar />
       {/* Background layer */}
       <AnimatedBackground />
-      <div className="fixed inset-0 bg-black/60 z-5 pointer-events-none"></div>
+      <div className="fixed inset-0 bg-white/60 dark:bg-black/60 z-5 pointer-events-none transition-colors duration-300"></div>
 
       {/* Snowfall - positioned above overlay */}
       <Snowfall
-        color="white"
+        color={isDark ? "white" : "#cbd5e1"}
         snowflakeCount={100}
         style={{ position: 'fixed', width: '100vw', height: '100vh', zIndex: 8 }}
       />

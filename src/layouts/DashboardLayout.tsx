@@ -1,19 +1,21 @@
 import { useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { useOutlet } from 'react-router-dom';
 import { Sidebar } from '../components/dashboard/Sidebar';
 import { AnimatedBackground } from '../components/home/AnimatedBackground';
+import { DashboardTransition } from '../components/layout/DashboardTransition';
 import { cn } from '../utils/cn';
 
 export function DashboardLayout() {
     const [isCollapsed, setIsCollapsed] = useState(false);
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const outlet = useOutlet();
 
     return (
-        <div className="flex min-h-screen bg-black text-white relative font-space-grotesk selection:bg-blue-500/30">
+        <div className="flex min-h-screen bg-white dark:bg-black text-gray-900 dark:text-white relative font-space-grotesk selection:bg-blue-500/30">
             {/* Background Reuse */}
             <div className="fixed inset-0 z-0 pointer-events-none">
                 <AnimatedBackground />
-                <div className="absolute inset-0 bg-black/70 backdrop-blur-[2px]"></div>
+                <div className="absolute inset-0 bg-white/60 dark:bg-black/70 backdrop-blur-[2px]"></div>
             </div>
 
             <div className="relative z-10 flex flex-col w-full min-h-screen">
@@ -63,7 +65,9 @@ export function DashboardLayout() {
 
                     <main className="flex-1 relative transition-all duration-300 ease-in-out">
                         <div className="p-4 md:p-6 pb-16 max-w-[1400px] mx-auto">
-                            <Outlet />
+                            <DashboardTransition>
+                                {outlet}
+                            </DashboardTransition>
                         </div>
                     </main>
                 </div>

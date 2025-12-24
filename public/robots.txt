@@ -1,6 +1,5 @@
 User-agent: *
 Allow: /
-Sitemap: https://www.tagtics.online/sitemap.xml
+Disallow: /dashboard/
 
-# Disallow admin/dashboard from crawling 
-Disallow: /dashboard
+Sitemap: https://www.tagtics.online/sitemap.xml

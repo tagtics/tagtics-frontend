@@ -95,26 +95,27 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
                         <motion.div
                             initial={{ opacity: 0, scale: 0.95, y: 20 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
-                            exit={{ opacity: 0, scale: 0.95, y: 20 }}
-                            className="bg-black/90 backdrop-blur-xl border border-white/10 rounded-3xl p-8 max-w-md w-full shadow-2xl"
+                            onClick={(e) => e.stopPropagation()}
+                            className="bg-white dark:bg-gray-900 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative"
                         >
-                            {/* Header */}
-                            <div className="flex items-center justify-between mb-6">
-                                <h2 className="text-2xl font-bold text-white">Add New Project</h2>
-                                <button
-                                    onClick={onClose}
-                                    className="p-2 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all"
-                                >
-                                    <X className="w-5 h-5" />
-                                </button>
+                            <div className="p-6 border-b border-gray-100 dark:border-white/10">
+                                <div className="flex items-center justify-between">
+                                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">Add New Project</h2>
+                                    <button
+                                        onClick={onClose}
+                                        className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg transition-colors text-gray-500 dark:text-gray-400"
+                                    >
+                                        <X className="w-5 h-5" />
+                                    </button>
+                                </div>
                             </div>
 
                             {/* Form */}
-                            <form onSubmit={handleSubmit} className="space-y-5">
+                            <form onSubmit={handleSubmit} className="space-y-5 p-6">
                                 {/* Project Name */}
                                 <div>
                                     <div className="flex justify-between mb-2">
-                                        <label className="block text-sm font-medium text-gray-300">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                             Project Name *
                                         </label>
                                         <span className="text-xs text-gray-500">
@@ -127,8 +128,8 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
                                         value={formData.name}
                                         onChange={(e) => handleChange('name', e.target.value)}
                                         className={cn(
-                                            "w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-500 outline-none transition-all",
-                                            errors.name ? "border-red-500" : "border-white/10 focus:border-blue-500"
+                                            "w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all",
+                                            errors.name ? "border-red-500" : "border-gray-200 dark:border-white/10 focus:border-blue-500"
                                         )}
                                         placeholder="My Awesome App"
                                     />
@@ -140,7 +141,7 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
                                 {/* Website URL */}
                                 <div>
                                     <div className="flex justify-between mb-2">
-                                        <label className="block text-sm font-medium text-gray-300">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                             Website URL *
                                         </label>
                                         <span className="text-xs text-gray-500">
@@ -153,8 +154,8 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
                                         value={formData.url}
                                         onChange={(e) => handleChange('url', e.target.value)}
                                         className={cn(
-                                            "w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-500 outline-none transition-all",
-                                            errors.url ? "border-red-500" : "border-white/10 focus:border-blue-500"
+                                            "w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all font-mono text-sm",
+                                            errors.url ? "border-red-500" : "border-gray-200 dark:border-white/10 focus:border-blue-500"
                                         )}
                                         placeholder="https://example.com or http://localhost:3000"
                                     />
@@ -166,7 +167,7 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
                                 {/* Developer Name */}
                                 <div>
                                     <div className="flex justify-between mb-2">
-                                        <label className="block text-sm font-medium text-gray-300">
+                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
                                             Developer Name *
                                         </label>
                                         <span className="text-xs text-gray-500">
@@ -179,8 +180,8 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
                                         value={formData.devName}
                                         onChange={(e) => handleChange('devName', e.target.value)}
                                         className={cn(
-                                            "w-full px-4 py-3 bg-white/5 border rounded-xl text-white placeholder-gray-500 outline-none transition-all",
-                                            errors.devName ? "border-red-500" : "border-white/10 focus:border-blue-500"
+                                            "w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all",
+                                            errors.devName ? "border-red-500" : "border-gray-200 dark:border-white/10 focus:border-blue-500"
                                         )}
                                         placeholder="John Doe"
                                     />

@@ -10,6 +10,8 @@ export function AppRouter() {
   const Projects = lazy(() => import('./pages/dashboard/Projects.tsx'));
   const ProjectFeedbacks = lazy(() => import('./pages/dashboard/ProjectFeedbacks.tsx'));
   const ProjectSettings = lazy(() => import('./pages/dashboard/ProjectSettings.tsx'));
+  const Settings = lazy(() => import('./pages/dashboard/Settings.tsx'));
+  const Subscription = lazy(() => import('./pages/dashboard/Subscription.tsx'));
 
   return <BrowserRouter
     future={{
@@ -33,7 +35,8 @@ export function AppRouter() {
             <Route path="settings" element={<ProjectSettings />} />
           </Route>
 
-          <Route path="settings" element={<div className="text-white">Settings</div>} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="subscription" element={<Subscription />} />
         </Route>
 
         <Route path="*" element={<Navigate to="/" replace />} />

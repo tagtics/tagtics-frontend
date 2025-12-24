@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, Settings, LogOut, PanelLeftClose, PanelLeft, X } from 'lucide-react';
+import { LayoutDashboard, FolderKanban, Settings, LogOut, PanelLeftClose, PanelLeft, X, CreditCard } from 'lucide-react';
 import { NavLink, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '../../utils/cn';
@@ -14,13 +14,14 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
     const navItems = [
         { icon: LayoutDashboard, label: 'Overview', path: '/dashboard' },
         { icon: FolderKanban, label: 'Projects', path: '/dashboard/projects' },
+        { icon: CreditCard, label: 'Subscription', path: '/dashboard/subscription' },
         { icon: Settings, label: 'Settings', path: '/dashboard/settings' },
     ];
 
     return (
         <aside
             className={cn(
-                "h-screen p-3 flex flex-col bg-black/20 backdrop-blur-xl border-r border-white/5 transition-all duration-300 ease-in-out",
+                "h-screen p-3 flex flex-col bg-white dark:bg-black/20 shadow-xl dark:shadow-none backdrop-blur-xl border-r border-gray-100 dark:border-white/5 transition-all duration-300 ease-in-out",
                 isCollapsed ? "w-20" : "w-72"
             )}
         >
@@ -43,7 +44,7 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
                                 initial={{ opacity: 0, x: -10 }}
                                 animate={{ opacity: 1, x: 0 }}
                                 exit={{ opacity: 0, x: -10 }}
-                                className="text-xl font-bold font-space-grotesk tracking-tight bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent ml-3 whitespace-nowrap"
+                                className="text-xl font-bold font-space-grotesk tracking-tight bg-gradient-to-r from-blue-600 to-purple-600 dark:from-blue-400 dark:to-purple-500 bg-clip-text text-transparent ml-3 whitespace-nowrap"
                             >
                                 Tagtics
                             </motion.h1>
@@ -63,7 +64,7 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
                         }
                     }}
                     className={cn(
-                        "p-1.5 rounded-lg text-gray-400 hover:text-white hover:bg-white/10 transition-all hover:scale-110 active:scale-95",
+                        "p-1.5 rounded-lg text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/10 transition-all hover:scale-110 active:scale-95",
                         // Show X on mobile when open, collapse button on desktop
                         isMobileMenuOpen ? "block lg:hidden" : "hidden lg:block"
                     )}
@@ -89,7 +90,7 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
                         className={({ isActive }) =>
                             cn(
                                 "relative flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-300 group overflow-hidden",
-                                isActive ? "text-white" : "text-gray-400 hover:text-white",
+                                isActive ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white",
                                 isCollapsed ? "justify-center" : ""
                             )
                         }
@@ -99,7 +100,7 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
                                 {isActive && (
                                     <motion.div
                                         layoutId="sidebar-active"
-                                        className="absolute inset-0 bg-white/10 border border-white/5 rounded-xl"
+                                        className="absolute inset-0 bg-white dark:bg-white/10 border border-gray-200 dark:border-white/5 rounded-xl shadow-sm dark:shadow-none"
                                         initial={false}
                                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                                     />
@@ -108,7 +109,7 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
                                 <item.icon
                                     className={cn(
                                         "w-5 h-5 relative z-10 transition-colors duration-300 shrink-0",
-                                        isActive ? "text-blue-400" : "group-hover:text-blue-300"
+                                        isActive ? "text-blue-600 dark:text-blue-400" : "group-hover:text-blue-500 dark:group-hover:text-blue-300"
                                     )}
                                 />
 
@@ -131,18 +132,19 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
             </nav>
 
             {/* Footer Actions */}
-            <div className="mt-auto space-y-4 px-2 pb-4">
+            <div className="mt-auto space-y-2 px-2 pb-4">
                 <button
                     className={cn(
-                        "flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-400 hover:text-white hover:bg-white/5 transition-all group overflow-hidden",
+                        "flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all group overflow-hidden",
                         isCollapsed ? "justify-center px-2" : ""
                     )}
                     title={isCollapsed ? "Sign Out" : undefined}
                 >
-                    <LogOut className="w-5 h-5 group-hover:text-red-400 transition-colors shrink-0" />
+                    <LogOut className="w-5 h-5 group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors shrink-0" />
                     {!isCollapsed && <span className="font-medium whitespace-nowrap">Sign Out</span>}
                 </button>
             </div>
         </aside>
     );
 }
+

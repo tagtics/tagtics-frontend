@@ -8,10 +8,16 @@ export const AnimatedBackground: React.FC = () => {
   useEffect(() => {
     let isMounted = true;
 
-    const loadVanta = async () => {
-      if (!isMounted || vantaEffect.current || !vantaRef.current) return;
+    const initVanta = async () => {
+      if (!isMounted || !vantaRef.current) return;
 
+      const isDark = document.documentElement.classList.contains('dark');
       const GLOBE = (await import("vanta/dist/vanta.globe.min")).default;
+
+      // Destroy previous instance if exists
+      if (vantaEffect.current) {
+        vantaEffect.current.destroy();
+      }
 
       vantaEffect.current = GLOBE({
         el: vantaRef.current as HTMLElement,
@@ -23,16 +29,32 @@ export const AnimatedBackground: React.FC = () => {
         minWidth: 200.0,
         scale: 1.0,
         scaleMobile: 1.0,
-        color: 0x8b5cf6,
-        backgroundColor: 0x000000, // <-- black bg maintained
+        color: isDark ? 0xffffff : 0x000000,
+        color2: isDark ? 0xffffff : 0x000000,
+        backgroundColor: isDark ? 0x000000 : 0xffffff,
         size: 1.0,
       });
     };
 
-    loadVanta();
+    initVanta();
+
+    // Watch for theme changes
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) => {
+        if (mutation.type === 'attributes' && mutation.attributeName === 'class') {
+          initVanta();
+        }
+      });
+    });
+
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
 
     return () => {
       isMounted = false;
+      observer.disconnect();
       if (vantaEffect.current) {
         vantaEffect.current.destroy();
         vantaEffect.current = null;

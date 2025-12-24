@@ -1,18 +1,9 @@
 import React from 'react';
+import { HelmetProvider } from 'react-helmet-async';
 import './index.css';
 import { createRoot } from 'react-dom/client';
-import { AppRouter } from './AppRouter';
 import { showEasterEgg } from './utils/easterEgg';
-// import Tagtics from 'tagtics-client'; // Import it
-
-// Initialize Tagtics here
-// Tagtics.init({
-//   apiKey: 'TEST_KEY',
-//   excludePaths: ['.*'],  // Show everywhere
-//   privacyNotice: 'Custom privacy notice for testing',
-//   serializeChildDepth: 2,
-//   allowSensitivePages: true,  // Test on all pages
-// });
+import { App } from './App';
 
 showEasterEgg();
 
@@ -21,7 +12,9 @@ if (rootElement) {
   const root = createRoot(rootElement);
   root.render(
     <React.StrictMode>
-      <AppRouter />
+      <HelmetProvider>
+        <App />
+      </HelmetProvider>
     </React.StrictMode>
   );
 }

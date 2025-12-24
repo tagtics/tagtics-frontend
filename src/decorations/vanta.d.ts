@@ -1,6 +1,6 @@
 declare module 'vanta/dist/vanta.globe.min' {
   import * as THREE from 'three';
-  
+
   interface VantaGlobeConfig {
     el: HTMLElement;
     THREE: typeof THREE;
@@ -12,6 +12,7 @@ declare module 'vanta/dist/vanta.globe.min' {
     scale?: number;
     scaleMobile?: number;
     color?: number;
+    color2?: number;
     backgroundColor?: number;
     size?: number;
   }

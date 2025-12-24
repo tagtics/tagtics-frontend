@@ -1,9 +1,12 @@
-import { useParams } from 'react-router-dom';
+import { useSearchParams, useParams } from 'react-router-dom';
 import { MOCK_PROJECTS, MOCK_FEEDBACKS } from '../../data/mock';
-import { AlertCircle, CheckCircle, Clock } from 'lucide-react';
+import { AlertCircle, CheckCircle, Clock, Layers } from 'lucide-react';
+import SEO from '../../components/common/SEO';
 
 export default function ProjectFeedbacks() {
     const { projectId } = useParams();
+    const [searchParams, setSearchParams] = useSearchParams();
+    const selectedComponent = searchParams.get('component');
 
     const project = MOCK_PROJECTS.find(p => p.id === projectId);
     const feedbacks = MOCK_FEEDBACKS.filter(f => f.projectId === projectId);
@@ -11,6 +14,16 @@ export default function ProjectFeedbacks() {
     if (!project) {
         return <div className="text-white">Project not found</div>;
     }
+
+    // Group feedbacks by component
+    const groupedFeedbacks = feedbacks.reduce((acc, feedback) => {
+        const componentName = feedback.component || 'Uncategorized';
+        if (!acc[componentName]) {
+            acc[componentName] = [];
+        }
+        acc[componentName].push(feedback);
+        return acc;
+    }, {} as Record<string, typeof feedbacks>);
 
     const getTypeIcon = (type: string) => {
         switch (type) {
@@ -28,19 +41,65 @@ export default function ProjectFeedbacks() {
         }
     };
 
+
+
+    const currentFeedbacks = selectedComponent
+        ? groupedFeedbacks[selectedComponent]
+        : [];
+
     return (
-        <div className="space-y-4">
-            {/* Feedback List */}
-            {feedbacks.length === 0 ? (
-                <div className="p-12 text-center text-gray-400 border border-white/10 rounded-xl bg-white/5">
-                    No feedback found for this project yet.
+        <div className="space-y-6">
+            <SEO title="Project Feedbacks" description="View and manage user feedback for your project." />
+            <h1 className="sr-only">Project Feedbacks</h1>
+            {!selectedComponent ? (
+                // Groups View
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {Object.entries(groupedFeedbacks).map(([componentName, items]) => {
+                        const bugCount = items.filter(i => i.type === 'bug').length;
+                        const featureCount = items.filter(i => i.type === 'feature').length;
+
+                        return (
+                            <div
+                                key={componentName}
+                                onClick={() => setSearchParams({ component: componentName })}
+                                className="p-6 rounded-xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md hover:bg-gray-50 dark:hover:bg-white/10 transition-all cursor-pointer group"
+                            >
+                                <div className="flex items-center justify-between mb-4">
+                                    <div className="p-2 rounded-lg bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 transition-colors">
+                                        <Layers className="w-5 h-5" />
+                                    </div>
+                                    <div className="text-xs text-gray-400 font-medium px-2 py-1 rounded-full bg-white/5 border border-white/5">
+                                        {items.length} items
+                                    </div>
+                                </div>
+                                <h3 className="text-lg font-medium text-gray-900 dark:text-white mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                                    {componentName}
+                                </h3>
+                                <div className="flex items-center gap-3 text-xs text-gray-400">
+                                    {bugCount > 0 && (
+                                        <span className="flex items-center gap-1">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-red-400" />
+                                            {bugCount} Bugs
+                                        </span>
+                                    )}
+                                    {featureCount > 0 && (
+                                        <span className="flex items-center gap-1">
+                                            <div className="w-1.5 h-1.5 rounded-full bg-blue-400" />
+                                            {featureCount} Features
+                                        </span>
+                                    )}
+                                </div>
+                            </div>
+                        );
+                    })}
                 </div>
             ) : (
+                // Details View
                 <div className="space-y-3">
-                    {feedbacks.map((item) => (
+                    {currentFeedbacks.map((item) => (
                         <div
                             key={item.id}
-                            className="p-4 rounded-xl border border-white/10 bg-white/5 backdrop-blur-md hover:bg-white/10 transition-all cursor-pointer group"
+                            className="p-4 rounded-xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md hover:bg-gray-50 dark:hover:bg-white/10 transition-all cursor-pointer group"
                         >
                             <div className="flex items-start justify-between gap-4">
                                 <div className="flex-1 min-w-0">
@@ -52,9 +111,9 @@ export default function ProjectFeedbacks() {
                                         </span>
                                         <span className="text-xs text-gray-500 ml-auto">{new Date(item.timestamp).toLocaleDateString()}</span>
                                     </div>
-                                    <p className="text-white text-sm font-medium mb-2 group-hover:text-blue-400 transition-colors">{item.content}</p>
+                                    <p className="text-gray-900 dark:text-white text-sm font-medium mb-2 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">{item.content}</p>
                                     <div className="flex items-center gap-4 text-xs text-gray-400">
-                                        <span>Element: <code className="text-blue-400 bg-black/30 px-1.5 py-0.5 rounded">{item.element}</code></span>
+                                        <span>Element: <code className="text-blue-500 dark:text-blue-400 bg-gray-100 dark:bg-black/30 px-1.5 py-0.5 rounded">{item.element}</code></span>
                                         <span className="truncate">Path: {item.path}</span>
                                     </div>
                                 </div>

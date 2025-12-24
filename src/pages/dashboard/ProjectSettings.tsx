@@ -4,6 +4,7 @@ import { useProjectStore } from '../../store/projectStore';
 import { Eye, EyeOff, RefreshCw, Trash2, Save, Check, Copy, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { cn } from '../../utils/cn';
+import SEO from '../../components/common/SEO';
 
 export default function ProjectSettings() {
     const { projectId } = useParams<{ projectId: string }>();
@@ -121,12 +122,13 @@ export default function ProjectSettings() {
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 max-w-6xl mx-auto w-full">
+            <SEO title="Project Settings" description="Manage project details and API keys." />
             {/* Left Column: Project Details Form */}
             <motion.div
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md space-y-3"
+                className="p-4 rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md space-y-3"
             >
-                <h2 className="text-base font-bold text-white mb-4">Project Details</h2>
+                <h2 className="text-base font-bold text-gray-900 dark:text-white mb-4">Project Details</h2>
 
                 {/* Project Name */}
                 <div>
@@ -144,8 +146,8 @@ export default function ProjectSettings() {
                         value={formData.name}
                         onChange={(e) => handleChange('name', e.target.value)}
                         className={cn(
-                            "w-full px-3 py-2 bg-white/5 border rounded-lg text-sm text-white placeholder-gray-500 outline-none transition-all",
-                            errors.name ? "border-red-500" : "border-white/10 focus:border-blue-500"
+                            "w-full px-3 py-2 bg-gray-50 dark:bg-white/5 border rounded-lg text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all",
+                            errors.name ? "border-red-500" : "border-gray-200 dark:border-white/10 focus:border-blue-500"
                         )}
                     />
                     {errors.name && (
@@ -173,7 +175,7 @@ export default function ProjectSettings() {
                 </div>
 
                 {/* Local Testing Configuration */}
-                <div className="space-y-2 p-3 bg-white/5 rounded-lg border border-white/10">
+                <div className="space-y-2 p-3 bg-gray-50 dark:bg-white/5 rounded-lg border border-gray-200 dark:border-white/10">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center gap-2">
                             <div className={cn(
@@ -253,8 +255,8 @@ export default function ProjectSettings() {
                         value={formData.devName}
                         onChange={(e) => handleChange('devName', e.target.value)}
                         className={cn(
-                            "w-full px-3 py-2 bg-white/5 border rounded-lg text-sm text-white placeholder-gray-500 outline-none transition-all",
-                            errors.devName ? "border-red-500" : "border-white/10 focus:border-blue-500"
+                            "w-full px-3 py-2 bg-gray-50 dark:bg-white/5 border rounded-lg text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all",
+                            errors.devName ? "border-red-500" : "border-gray-200 dark:border-white/10 focus:border-blue-500"
                         )}
                     />
                     {errors.devName && (
@@ -289,11 +291,11 @@ export default function ProjectSettings() {
                 <motion.div
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="p-5 rounded-2xl border border-white/10 bg-white/5 backdrop-blur-md space-y-4"
+                    className="p-5 rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md space-y-4"
                 >
-                    <h2 className="text-base font-bold text-white mb-4">API Key</h2>
+                    <h2 className="text-base font-bold text-gray-900 dark:text-white mb-4">API Key</h2>
 
-                    <div className="p-3 bg-black/20 rounded-lg border border-white/5">
+                    <div className="p-3 bg-gray-50 dark:bg-black/20 rounded-lg border border-gray-200 dark:border-white/5">
                         <div className="flex items-center justify-between mb-2">
                             <span className="text-xs text-gray-400 font-medium">Your API Key</span>
                             <div className="flex gap-1">

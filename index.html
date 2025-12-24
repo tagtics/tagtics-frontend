@@ -43,6 +43,13 @@
 
   <!-- Robots -->
   <meta name="robots" content="index, follow">
+  <script>
+    if (localStorage.theme === 'dark' || (!('theme' in localStorage))) {
+      document.documentElement.classList.add('dark')
+    } else {
+      document.documentElement.classList.remove('dark')
+    }
+  </script>
   <title>Tagtics</title>
 </head>
 
