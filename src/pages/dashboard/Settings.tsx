@@ -20,8 +20,8 @@ export default function Settings() {
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 flex-1 min-h-0 overflow-y-auto custom-scrollbar">
                 {/* Account Section - Compact & Light Mode */}
-                <div className="h-fit p-5 rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md flex flex-col">
-                    <div className="flex items-center gap-3 mb-4">
+                <div className="h-full p-4 rounded-2xl border border-gray-100 dark:border-white/10 bg-white/60 dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md flex flex-col">
+                    <div className="flex items-center gap-3 mb-3">
                         <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400">
                             <User className="w-4 h-4" />
                         </div>
@@ -51,10 +51,10 @@ export default function Settings() {
                 </div>
 
                 {/* Security & Danger Zone - Stacked */}
-                <div className="space-y-6 flex flex-col h-fit">
+                <div className="space-y-6 flex flex-col h-full">
                     {/* Security */}
-                    <div className="h-fit p-5 rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md">
-                        <div className="flex items-center gap-3 mb-4">
+                    <div className="flex-1 p-4 rounded-2xl border border-gray-100 dark:border-white/10 bg-white/60 dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md">
+                        <div className="flex items-center gap-3 mb-3">
                             <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-400">
                                 <Lock className="w-4 h-4" />
                             </div>
@@ -73,7 +73,7 @@ export default function Settings() {
                     </div>
 
                     {/* Danger Zone */}
-                    <div className="h-fit p-5 rounded-2xl border border-red-100 dark:border-red-500/10 bg-red-50/50 dark:bg-red-500/5 shadow-sm dark:shadow-none backdrop-blur-md">
+                    <div className="h-fit p-4 rounded-2xl border border-red-100 dark:border-red-500/10 bg-red-50/50 dark:bg-red-500/5 shadow-sm dark:shadow-none backdrop-blur-md">
                         <div className="flex items-center gap-3 mb-3">
                             <div className="p-2 rounded-lg bg-red-100 dark:bg-red-500/20 text-red-500 dark:text-red-400">
                                 <Trash2 className="w-4 h-4" />

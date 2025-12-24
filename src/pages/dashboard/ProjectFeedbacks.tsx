@@ -62,7 +62,7 @@ export default function ProjectFeedbacks() {
                             <div
                                 key={componentName}
                                 onClick={() => setSearchParams({ component: componentName })}
-                                className="p-6 rounded-xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md hover:bg-gray-50 dark:hover:bg-white/10 transition-all cursor-pointer group"
+                                className="p-6 rounded-xl border border-gray-100 dark:border-white/10 bg-white/60 dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md hover:bg-gray-50 dark:hover:bg-white/10 transition-all cursor-pointer group"
                             >
                                 <div className="flex items-center justify-between mb-4">
                                     <div className="p-2 rounded-lg bg-blue-500/20 text-blue-400 group-hover:bg-blue-500/30 transition-colors">
@@ -99,7 +99,7 @@ export default function ProjectFeedbacks() {
                     {currentFeedbacks.map((item) => (
                         <div
                             key={item.id}
-                            className="p-4 rounded-xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md hover:bg-gray-50 dark:hover:bg-white/10 transition-all cursor-pointer group"
+                            className="p-4 rounded-xl border border-gray-100 dark:border-white/10 bg-white/60 dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md hover:bg-gray-50 dark:hover:bg-white/10 transition-all cursor-pointer group"
                         >
                             <div className="flex items-start justify-between gap-4">
                                 <div className="flex-1 min-w-0">

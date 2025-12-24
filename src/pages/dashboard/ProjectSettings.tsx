@@ -126,7 +126,7 @@ export default function ProjectSettings() {
             {/* Left Column: Project Details Form */}
             <motion.div
                 animate={{ opacity: 1, y: 0 }}
-                className="p-4 rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md space-y-3"
+                className="p-4 rounded-2xl border border-gray-100 dark:border-white/10 bg-white/60 dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md space-y-3"
             >
                 <h2 className="text-base font-bold text-gray-900 dark:text-white mb-4">Project Details</h2>
 
@@ -291,7 +291,7 @@ export default function ProjectSettings() {
                 <motion.div
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 }}
-                    className="p-5 rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md space-y-4"
+                    className="p-5 rounded-2xl border border-gray-100 dark:border-white/10 bg-white/60 dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md space-y-4"
                 >
                     <h2 className="text-base font-bold text-gray-900 dark:text-white mb-4">API Key</h2>
 

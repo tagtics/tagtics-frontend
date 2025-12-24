@@ -72,7 +72,7 @@ export default function Home() {
 
       {/* Snowfall - positioned above overlay */}
       <Snowfall
-        color={isDark ? "white" : "#cbd5e1"}
+        color={isDark ? "white" : "#111827"}
         snowflakeCount={100}
         style={{ position: 'fixed', width: '100vw', height: '100vh', zIndex: 8 }}
       />

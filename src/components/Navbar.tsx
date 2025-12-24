@@ -40,10 +40,10 @@ export const Navbar: React.FC = () => {
     }
   };
 
-  return <nav className="fixed w-full z-50 py-4 px-6 backdrop-blur-md bg-white/50 dark:bg-black/50 border-b border-gray-200 dark:border-white/10">
+  return <nav className="fixed w-full z-50 py-4 px-6 backdrop-blur-md bg-white/80 dark:bg-black/50 border-b border-gray-200 dark:border-white/10">
     <div className="max-w-7xl mx-auto flex justify-between items-center">
       <div className="text-xl md:text-2xl font-bold gradient-text">
-        Tagtics
+        <a href="/">Tagtics</a>
       </div>
       <div className="flex items-center gap-4">
         <div className="hidden md:block">
@@ -67,9 +67,12 @@ export const Navbar: React.FC = () => {
           </a>
         </div>
       </div>
-      <button aria-label="Navbar" className="md:hidden" onClick={() => setIsMenuOpen(!isMenuOpen)}>
-        {isMenuOpen ? <XIcon className="text-gray-900 dark:text-white" /> : <MenuIcon className="text-gray-900 dark:text-white" />}
-      </button>
+      <div className="flex items-center gap-2 md:hidden">
+        <ThemeToggle />
+        <button aria-label="Navbar" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+          {isMenuOpen ? <XIcon className="text-gray-900 dark:text-white" /> : <MenuIcon className="text-gray-900 dark:text-white" />}
+        </button>
+      </div>
     </div >
   </nav >;
 };

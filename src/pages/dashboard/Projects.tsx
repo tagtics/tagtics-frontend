@@ -60,7 +60,7 @@ export default function Projects() {
                         variants={item}
                         key={project.id}
                         onClick={() => navigate(`/dashboard/projects/${project.id}`)}
-                        className="group cursor-pointer p-5 rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md hover:bg-gray-50 dark:hover:bg-white/10 transition-all duration-300 relative overflow-hidden"
+                        className="group cursor-pointer p-5 rounded-2xl border border-gray-100 dark:border-white/10 bg-white/60 dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md hover:bg-gray-50 dark:hover:bg-white/10 transition-all duration-300 relative overflow-hidden"
                     >
                         <div className="mb-4">
                             <div className="w-10 h-10 rounded-xl bg-blue-100 dark:bg-gradient-to-br dark:from-blue-500/20 dark:to-purple-500/20 flex items-center justify-center mb-4 text-blue-600 dark:text-blue-400 ring-1 ring-blue-500/10 dark:ring-white/10">

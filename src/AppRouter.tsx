@@ -31,7 +31,12 @@ export function AppRouter() {
           {/* Project Detail Routes with Sub-Navigation */}
           <Route path="projects/:projectId" element={<ProjectDetailLayout />}>
             <Route index element={<ProjectFeedbacks />} />
-            <Route path="analytics" element={<div className="text-white">Analytics Coming Soon</div>} />
+            <Route path="analytics" element={
+              <div className="p-8 rounded-2xl border border-gray-100 dark:border-white/10 bg-white/60 dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md text-center">
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Analytics</h2>
+                <p className="text-gray-500 dark:text-gray-400 mt-2">Detailed insights coming soon.</p>
+              </div>
+            } />
             <Route path="settings" element={<ProjectSettings />} />
           </Route>
 

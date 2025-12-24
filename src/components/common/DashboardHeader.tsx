@@ -12,7 +12,7 @@ export function DashboardHeader({ className, breadcrumbItems, children }: Dashbo
     return (
         <div className={cn("flex items-center justify-between mb-2", className)}>
             <Breadcrumbs items={breadcrumbItems} />
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-3 mr-12 lg:mr-0">
                 <ThemeToggle />
                 {children}
             </div>

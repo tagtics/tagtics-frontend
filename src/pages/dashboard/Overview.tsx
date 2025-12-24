@@ -137,9 +137,10 @@ export default function Overview() {
                         onMouseLeave={() => setActivePopup(null)}
                         onClick={() => handleStatClick(stat.label)}
                         className={cn(
-                            "relative p-3 rounded-xl border bg-white dark:bg-black/40 border-gray-100 dark:border-white/10 shadow-sm dark:shadow-none backdrop-blur-md overflow-visible group transition-all cursor-pointer border-l-4",
+                            "relative p-3 rounded-xl border bg-white/60 dark:bg-black/40 border-gray-100 dark:border-white/10 shadow-sm dark:shadow-none backdrop-blur-md overflow-visible group transition-all cursor-pointer border-l-4",
                             stat.color.replace(/text-/g, 'border-l-'),
-                            "hover:shadow-md dark:hover:bg-opacity-50"
+                            "hover:shadow-md dark:hover:bg-opacity-50",
+                            activePopup === stat.label ? "z-50" : "z-auto"
                         )}
                     >
                         <div className="flex items-center justify-between">
@@ -147,9 +148,13 @@ export default function Overview() {
                                 <div className={cn("p-1.5 rounded-lg bg-white/50 dark:bg-black/20")}>
                                     <stat.icon className={cn("w-4 h-4", stat.color)} />
                                 </div>
-                                <span className="text-sm font-medium text-gray-600 dark:text-gray-400 whitespace-nowrap">{stat.label}</span>
+                                <div className="min-w-0 flex-1">
+                                    <span className="text-xs md:text-sm font-medium text-gray-600 dark:text-gray-400 block truncate">
+                                        {stat.label}
+                                    </span>
+                                </div>
                             </div>
-                            <span className="text-xl font-bold text-gray-900 dark:text-white">{stat.value}</span>
+                            <span className="text-xl font-bold text-gray-900 dark:text-white ml-2 flex-none">{stat.value}</span>
                         </div>
 
                         {/* Interactive Popup Details - High Z-Index to overlap charts */}
@@ -183,7 +188,7 @@ export default function Overview() {
             {/* Main Content Split - Lower Z-Index */}
             <div className="flex-1 grid grid-cols-1 md:grid-cols-3 gap-4 min-h-0 relative z-10 text-gray-900 dark:text-white">
                 {/* Left Chart Section */}
-                <div className="md:col-span-2 p-5 rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-black/40 shadow-sm dark:shadow-none backdrop-blur-md flex flex-col">
+                <div className="md:col-span-2 p-5 rounded-2xl border border-gray-100 dark:border-white/10 bg-white/60 dark:bg-black/40 shadow-sm dark:shadow-none backdrop-blur-md flex flex-col">
                     <div className="flex items-center justify-between mb-4 flex-none">
                         <h2 className="text-lg font-bold flex items-center gap-2">
                             <TrendingUp className="w-4 h-4 text-blue-500 dark:text-blue-400" />
@@ -193,10 +198,10 @@ export default function Overview() {
                             <option>Last 7 days</option>
                         </select>
                     </div>
-                    <div className="flex-1 min-h-0 w-full relative -z-10">
+                    <div className="h-[300px] w-full min-w-0 relative -z-10">
                         {/* Recharts responsive container sometimes causes z-index issues, explicit low z-index here */}
                         {isMounted && (
-                            <ResponsiveContainer width="100%" height="100%">
+                            <ResponsiveContainer width="100%" height={300}>
                                 <AreaChart data={trendData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
                                     <defs>
                                         <linearGradient id="colorActive" x1="0" y1="0" x2="0" y2="1">
@@ -223,7 +228,7 @@ export default function Overview() {
                 </div>
 
                 {/* Right Activity Feed */}
-                <div className="p-5 rounded-2xl border border-gray-100 dark:border-white/10 bg-white dark:bg-black/40 shadow-sm dark:shadow-none backdrop-blur-md flex flex-col">
+                <div className="p-5 rounded-2xl border border-gray-100 dark:border-white/10 bg-white/60 dark:bg-black/40 shadow-sm dark:shadow-none backdrop-blur-md flex flex-col">
                     <div className="flex items-center justify-between mb-4 flex-none">
                         <h2 className="text-lg font-bold flex items-center gap-2">
                             <Clock className="w-4 h-4 text-purple-500 dark:text-purple-400" />
