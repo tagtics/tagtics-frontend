@@ -2,24 +2,28 @@
 
 > **Capture precise UI feedback exactly where it matters. No guesswork, just actionable insights.**
 
-[![Live Demo](https://img.shields.io/badge/🚀_Early_Access-tagtics.online-blueviolet?style=for-the-badge)](https://www.tagtics.online)
+[![Live Demo](https://img.shields.io/badge/tagtics.online-blueviolet?style=for-the-badge)](https://www.tagtics.online)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.2.3-61DAFB?style=flat&logo=react&logoColor=black)](https://reactjs.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat&logo=supabase&logoColor=white)](https://supabase.com/)
 
 ---
 
-## 🚀 Current Status: **Early Access Registration**
+## 🚀 Current Status: **Public Frontend Preview**
 
-**Tagtics is currently in development!** The landing page at [tagtics.online](https://www.tagtics.online) is live and accepting early access registrations.
+**Early Access Registration has ended.** Thank you for the overwhelming interest!
 
-### 🎁 Early Access Benefits
-- **3 Months Pro Free** (Worth $57)
-- **AI-Powered Feedback Summarization**
-- **Priority Support & Feature Requests**
-- **Limited to First 50 Users**
+We have opened up the platform for **general public testing**. You can now access the dashboard to experience the frontend interface firsthand.
 
-👉 **[Join the Waitlist Now](https://www.tagtics.online#early-access)**
+> **⚠️ Note:** The application currently runs with **dummy data**. The focus of this phase is to gather feedback on the **UI/UX feel**, responsiveness, and overall design before we connect the live backend.
+
+### 🧪 We Want Your Feedback
+Please test out the interface and let us know your thoughts:
+- How does the navigation feel?
+- Are the animations smooth?
+- Is the layout intuitive?
+
+👉 **[Test the App](https://www.tagtics.online)**
 
 ---
 
@@ -33,28 +37,25 @@ Tagtics is a **SaaS platform** that revolutionizes how developers collect user f
 
 Developers receive:
 - ✅ Exact DOM element identifiers (class, ID, tag)
-- ✅ Screenshots with highlighted elements
 - ✅ AI-categorized feedback by priority
 - ✅ Duplicate detection and aggregation
 
 ### 🎥 See It In Action
 
-Visit the **[Interactive Demo Section](https://www.tagtics.online#demo-section)** on our landing page to try selecting elements and submitting feedback!
+Visit the **[Interactive Demo Section](https://www.tagtics.online#demo-section)** or checkout the icon on bottom left on our landing page to try selecting elements and submitting feedback!
 
 ---
 
 ## ✨ Planned Features
 
 ### Phase 1: MVP (Current Development)
-- [x] Landing page with early access registration
-- [x] Interactive demo preview
+- [ ] Interactive demo preview
 - [ ] Feedback widget (embeddable script)
 - [ ] Admin dashboard for viewing feedback
 - [ ] User authentication & project management
 
 ### Phase 2: Advanced Features
 - [ ] AI-powered feedback summarization
-- [ ] Screenshot capture with annotations
 - [ ] Team collaboration tools
 - [ ] Webhook integrations (Slack, Discord, Jira)
 - [ ] Analytics & trend detection
@@ -70,7 +71,8 @@ Visit the **[Interactive Demo Section](https://www.tagtics.online#demo-section)*
 ## 🛠️ Tech Stack
 
 **Frontend (Landing Page):**
-- React 18 with TypeScript
+- React 19 with TypeScript
+- Zustand for Store
 - Tailwind CSS for styling
 - Lucide Icons for UI elements
 - AOS (Animate On Scroll) for smooth animations
@@ -92,61 +94,7 @@ Visit the **[Interactive Demo Section](https://www.tagtics.online#demo-section)*
 
 ---
 
-## 📂 Project Structure
 
-```
-tagtics/
-├── src/
-│   ├── components/
-│   │   ├── home/
-│   │   │   ├── Navbar.tsx
-│   │   │   ├── HeroSection.tsx
-│   │   │   ├── FeaturesSection.tsx
-│   │   │   ├── DemoPreview.tsx          # Interactive demo
-│   │   │   ├── HowItWorksSection.tsx
-│   │   │   └── EarlyAccessSection.tsx   # Registration form
-│   │   ├── Navbar.tsx
-│   │   └── Footer.tsx
-│   ├── pages/
-│   │   ├── Home.tsx
-│   │   └── Dashboard.tsx (coming soon)
-│   ├── services/
-│   │   └── EarlyAccess.service.ts   # Supabase API calls
-│   ├── utils/
-│   │   └── LoadingFallback.tsx
-│   ├── AppRouter.tsx
-│   └── main.tsx
-├── public/
-│   ├── robots.txt
-│   ├── sitemap.xml
-│   └── tagtics.svg
-└── package.json
-```
-
----
-
-## 🎨 Key Components
-
-### 1. **DemoPreview Component**
-An interactive mockup showing how Tagtics works:
-- Users click the feedback icon
-- Select UI elements (buttons, cards, headers)
-- Submit feedback via a form
-- Guided tooltips walk users through the process
-
-### 2. **EarlyAccessSection Component**
-Features:
-- Email validation & rate limiting
-- Real-time form error handling
-- Success/error toast notifications
-- Integration with Supabase for user storage
-
-### 3. **HowItWorksSection Component**
-- Auto-playing carousel explaining the 3-step process
-- AI analysis visualization with mock progress bars
-- Responsive design for mobile/tablet/desktop
-
----
 
 ## 🚀 Getting Started (For Contributors)
 
@@ -158,25 +106,25 @@ Features:
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/tagtics.git
-cd tagtics
+git clone https://github.com/tagtics/tagtics-frontend.git
+cd tagtics-frontend
 
 # Install dependencies
-npm install
+pnpm install
 
 # Create .env file with your Supabase credentials
 VITE_SUPABASE_URL=your_supabase_url
 VITE_SUPABASE_ANON_KEY=your_supabase_anon_key
 
 # Run development server
-npm run dev
+pnpm run dev
 ```
 
 ### Build for Production
 
 ```bash
-npm run build
-npm run preview  # Test production build locally
+pnpm run build
+pnpm run preview  # Test production build locally
 ```
 
 ---
@@ -184,12 +132,11 @@ npm run preview  # Test production build locally
 ## 📊 SEO & Performance
 
 ### Optimizations Implemented
-- ✅ Comprehensive meta tags (Open Graph, Twitter Cards)
+- ✅ Comprehensive meta tags
 - ✅ Semantic HTML5 structure
 - ✅ robots.txt & sitemap.xml
 - ✅ Lazy-loaded components
 - ✅ Code splitting with React Router
-- ✅ Optimized images and fonts
 - ✅ Structured data (Schema.org)
 
 ### Lighthouse Scores (Desktop)
@@ -210,17 +157,6 @@ npm run preview  # Test production build locally
 
 ---
 
-## 📈 Roadmap
-
-| Quarter | Milestone |
-|---------|-----------|
-| **Q1 2025** | ✅ Landing page live<br>✅ Early access registration<br>⏳ Feedback widget development |
-| **Q2 2025** | ⏳ Admin dashboard MVP<br>⏳ Screenshot capture<br>⏳ Beta launch |
-| **Q3 2025** | ⏳ AI summarization<br>⏳ Team features<br>⏳ Public launch |
-| **Q4 2025** | ⏳ Enterprise features<br>⏳ Integrations (Slack, Jira) |
-
----
-
 ## 🤝 Contributing
 
 While Tagtics is currently in private development, I welcome feedback and suggestions!
@@ -236,7 +172,7 @@ While Tagtics is currently in private development, I welcome feedback and sugges
 
 - **Website:** [tagtics.online](https://www.tagtics.online)
 - **Twitter/X:** [@tagticsdev](https://x.com/tagticsdev)
-- **LinkedIn:** [Tagtics Dev](https://linkedin.com/in/tagtics-dev-111b7b385)
+- **LinkedIn:** [Tagtics Dev](https://www.linkedin.com/company/tagtics-dev)
 - **GitHub:** [github.com/tagtics](https://github.com/tagtics)
 
 ---
@@ -266,6 +202,6 @@ Built with ❤️ using:
 
 [![Star on GitHub](https://img.shields.io/github/stars/tagtics/tagtics?style=social)](https://github.com/tagtics/tagtics)
 
-**[Join Early Access →](https://www.tagtics.online#early-access)**
+**[Launch App →](https://www.tagtics.online)**
 
 </div>
