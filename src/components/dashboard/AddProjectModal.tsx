@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useProjectStore } from '../../store/projectStore';
-import { cn } from '../../utils/cn';
+import { useProjectStore } from '@store/projectStore';
+import { cn } from '@utils/cn';
 
 interface AddProjectModalProps {
     isOpen: boolean;

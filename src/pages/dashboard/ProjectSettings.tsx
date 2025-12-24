@@ -1,10 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useProjectStore } from '../../store/projectStore';
+import { useProjectStore } from '@store/projectStore';
 import { Eye, EyeOff, RefreshCw, Trash2, Save, Check, Copy, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { cn } from '../../utils/cn';
-import SEO from '../../components/common/SEO';
+import { cn } from '@utils/cn';
+import SEO from '@components/common/SEO';
 
 export default function ProjectSettings() {
     const { projectId } = useParams<{ projectId: string }>();

@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { AppRouter } from './AppRouter';
+import { AppRouter } from '@/AppRouter';
 import Tagtics from 'tagtics-client';
 
 export function App() {

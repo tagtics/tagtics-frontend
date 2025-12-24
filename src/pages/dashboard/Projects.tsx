@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useProjectStore } from '../../store/projectStore';
+import { useProjectStore } from '@store/projectStore';
 import { ExternalLink, Plus } from 'lucide-react';
 import { motion } from 'framer-motion';
-import { AddProjectModal } from '../../components/dashboard/AddProjectModal';
-import { DashboardHeader } from '../../components/common/DashboardHeader';
-import SEO from '../../components/common/SEO';
+import { AddProjectModal } from '@components/dashboard/AddProjectModal';
+import { DashboardHeader } from '@components/common/DashboardHeader';
+import SEO from '@components/common/SEO';
 
 const container = {
     hidden: { opacity: 0 },

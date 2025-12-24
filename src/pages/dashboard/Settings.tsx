@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { User, Lock, Trash2, X, Eye, EyeOff, ShieldCheck } from 'lucide-react';
-import { DashboardHeader } from '../../components/common/DashboardHeader';
+import { DashboardHeader } from '@components/common/DashboardHeader';
 import { motion, AnimatePresence } from 'framer-motion';
-import SEO from '../../components/common/SEO';
+import SEO from '@components/common/SEO';
 
 export default function Settings() {
     const breadcrumbItems = [

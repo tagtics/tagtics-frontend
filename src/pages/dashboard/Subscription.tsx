@@ -1,5 +1,5 @@
-import { DashboardHeader } from '../../components/common/DashboardHeader';
-import SEO from '../../components/common/SEO';
+import { DashboardHeader } from '@components/common/DashboardHeader';
+import SEO from '@components/common/SEO';
 
 export default function Subscription() {
     const breadcrumbItems = [

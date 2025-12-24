@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useOutlet } from 'react-router-dom';
-import { Sidebar } from '../components/dashboard/Sidebar';
-import { AnimatedBackground } from '../components/home/AnimatedBackground';
-import { DashboardTransition } from '../components/layout/DashboardTransition';
-import { cn } from '../utils/cn';
+import { Sidebar } from '@components/dashboard/Sidebar';
+import { AnimatedBackground } from '@components/home/AnimatedBackground';
+import { DashboardTransition } from '@components/layout/DashboardTransition';
+import { cn } from '@utils/cn';
 
 export function DashboardLayout() {
     const [isCollapsed, setIsCollapsed] = useState(false);

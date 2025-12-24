@@ -1,7 +1,7 @@
 import { useSearchParams, useParams } from 'react-router-dom';
-import { MOCK_PROJECTS, MOCK_FEEDBACKS } from '../../data/mock';
+import { MOCK_PROJECTS, MOCK_FEEDBACKS } from '@data/mock';
 import { AlertCircle, CheckCircle, Clock, Layers } from 'lucide-react';
-import SEO from '../../components/common/SEO';
+import SEO from '@components/common/SEO';
 
 export default function ProjectFeedbacks() {
     const { projectId } = useParams();

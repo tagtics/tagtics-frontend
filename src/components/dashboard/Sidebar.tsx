@@ -1,7 +1,7 @@
 import { LayoutDashboard, FolderKanban, Settings, LogOut, PanelLeftClose, PanelLeft, X, CreditCard } from 'lucide-react';
 import { NavLink, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils/cn';
 
 interface SidebarProps {
     isCollapsed: boolean;

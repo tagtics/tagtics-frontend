@@ -1,17 +1,17 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
-import { LoadingFallback } from "./utils/LoadingFallback.tsx";
+import { LoadingFallback } from "@utils/LoadingFallback";
 
 export function AppRouter() {
-  const Home = lazy(() => import('./pages/Home.tsx'));
-  const DashboardLayout = lazy(() => import('./layouts/DashboardLayout.tsx').then(module => ({ default: module.DashboardLayout })));
-  const ProjectDetailLayout = lazy(() => import('./layouts/ProjectDetailLayout.tsx').then(module => ({ default: module.ProjectDetailLayout })));
-  const Overview = lazy(() => import('./pages/dashboard/Overview.tsx'));
-  const Projects = lazy(() => import('./pages/dashboard/Projects.tsx'));
-  const ProjectFeedbacks = lazy(() => import('./pages/dashboard/ProjectFeedbacks.tsx'));
-  const ProjectSettings = lazy(() => import('./pages/dashboard/ProjectSettings.tsx'));
-  const Settings = lazy(() => import('./pages/dashboard/Settings.tsx'));
-  const Subscription = lazy(() => import('./pages/dashboard/Subscription.tsx'));
+  const Home = lazy(() => import('@pages/Home'));
+  const DashboardLayout = lazy(() => import('@layouts/DashboardLayout').then(module => ({ default: module.DashboardLayout })));
+  const ProjectDetailLayout = lazy(() => import('@layouts/ProjectDetailLayout').then(module => ({ default: module.ProjectDetailLayout })));
+  const Overview = lazy(() => import('@pages/dashboard/Overview'));
+  const Projects = lazy(() => import('@pages/dashboard/Projects'));
+  const ProjectFeedbacks = lazy(() => import('@pages/dashboard/ProjectFeedbacks'));
+  const ProjectSettings = lazy(() => import('@pages/dashboard/ProjectSettings'));
+  const Settings = lazy(() => import('@pages/dashboard/Settings'));
+  const Subscription = lazy(() => import('@pages/dashboard/Subscription'));
 
   return <BrowserRouter
     future={{

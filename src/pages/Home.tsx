@@ -1,17 +1,17 @@
 import { useEffect, useState } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-import { DemoPreview } from "../components/home/DemoPreview";
-import { FeaturesSection } from "../components/home/FeaturesSection";
-import { HeroSection } from "../components/home/HeroSection";
-import { HowItWorksSection } from "../components/home/HowItWorksSection";
+import { DemoPreview } from "@components/home/DemoPreview";
+import { FeaturesSection } from "@components/home/FeaturesSection";
+import { HeroSection } from "@components/home/HeroSection";
+import { HowItWorksSection } from "@components/home/HowItWorksSection";
 import { Toaster } from "sonner";
-import { AnimatedBackground } from "../components/home/AnimatedBackground";
-import { Footer } from "../components/Footer";
-import { Navbar } from "../components/Navbar";
-import '../styles/Home.css';
+import { AnimatedBackground } from "@components/home/AnimatedBackground";
+import { Footer } from "@components/Footer";
+import { Navbar } from "@components/Navbar";
+import '@styles/Home.css';
 import Snowfall from "react-snowfall";
-import SEO from "../components/common/SEO";
+import SEO from "@components/common/SEO";
 
 
 

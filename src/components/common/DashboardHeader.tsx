@@ -1,6 +1,6 @@
 import Breadcrumbs from './Breadcrumbs';
 import { ThemeToggle } from './ThemeToggle';
-import { cn } from '../../utils/cn';
+import { cn } from '@utils/cn';
 
 interface DashboardHeaderProps {
     className?: string;

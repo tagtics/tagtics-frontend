@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react';
 
-import SEO from "../../components/common/SEO";
-import { MOCK_PROJECTS, MOCK_FEEDBACKS } from '../../data/mock';
+import SEO from "@components/common/SEO";
+import { MOCK_PROJECTS, MOCK_FEEDBACKS } from '@data/mock';
 import { Activity, CheckCircle, FolderKanban, MessageSquare, TrendingUp, ExternalLink, Clock } from 'lucide-react';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 import { motion, AnimatePresence } from 'framer-motion';
-import { DashboardHeader } from '../../components/common/DashboardHeader';
-import { cn } from '../../utils/cn';
+import { DashboardHeader } from '@components/common/DashboardHeader';
+import { cn } from '@utils/cn';
 
 const trendData = [
     { name: 'Mon', active: 4, resolved: 2 },

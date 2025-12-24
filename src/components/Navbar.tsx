@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { MenuIcon, XIcon } from 'lucide-react';
 import AOS from 'aos';
-import { isAuthenticated } from '../utils/auth';
-import { ThemeToggle } from './common/ThemeToggle';
+import { isAuthenticated } from '@utils/auth';
+import { ThemeToggle } from '@common/ThemeToggle';
 
 export const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
