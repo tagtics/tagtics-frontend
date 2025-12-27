@@ -5,7 +5,6 @@ import { DemoPreview } from "@components/home/DemoPreview";
 import { FeaturesSection } from "@components/home/FeaturesSection";
 import { HeroSection } from "@components/home/HeroSection";
 import { HowItWorksSection } from "@components/home/HowItWorksSection";
-import { Toaster } from "sonner";
 import { AnimatedBackground } from "@components/home/AnimatedBackground";
 import { Footer } from "@components/Footer";
 import { Navbar } from "@components/Navbar";
@@ -87,7 +86,7 @@ export default function Home() {
         <FeaturesSection />
         <HowItWorksSection />
         <Footer />
-        <Toaster position="top-right" />
+        <Footer />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",

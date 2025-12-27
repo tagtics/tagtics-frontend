@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { LoadingFallback } from "@utils/LoadingFallback";
 
@@ -12,6 +12,7 @@ export function AppRouter() {
   const ProjectSettings = lazy(() => import('@pages/dashboard/ProjectSettings'));
   const Settings = lazy(() => import('@pages/dashboard/Settings'));
   const Subscription = lazy(() => import('@pages/dashboard/Subscription'));
+  const NotFound = lazy(() => import('@pages/NotFound'));
 
   return <BrowserRouter
     future={{
@@ -44,7 +45,7 @@ export function AppRouter() {
           <Route path="subscription" element={<Subscription />} />
         </Route>
 
-        <Route path="*" element={<Navigate to="/" replace />} />
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </Suspense>
   </BrowserRouter>;

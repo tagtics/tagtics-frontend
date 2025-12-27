@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import { AppRouter } from '@/AppRouter';
 import Tagtics from 'tagtics-client';
 
+import { Toaster } from 'sonner';
+
 export function App() {
     useEffect(() => {
         // Global Initialization
@@ -19,6 +21,9 @@ export function App() {
     }, []);
 
     return (
-        <AppRouter />
+        <>
+            <AppRouter />
+            <Toaster position="bottom-right" theme="dark" richColors />
+        </>
     );
 }

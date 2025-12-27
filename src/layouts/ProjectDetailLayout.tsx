@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+import { toast } from 'sonner';
 import { Outlet, useParams, NavLink, useNavigate, useLocation, useSearchParams } from 'react-router-dom';
 import { useProjectStore } from '@/store/projectStore';
 import { MessageSquare, BarChart3, Settings } from 'lucide-react';
@@ -9,22 +11,16 @@ export function ProjectDetailLayout() {
     const navigate = useNavigate();
     const project = useProjectStore((state) => state.getProjectById(projectId!));
 
-    if (!project) {
-        return (
-            <div className="flex items-center justify-center min-h-[400px]">
-                <div className="text-center">
-                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Project Not Found</h2>
-                    <p className="text-gray-600 dark:text-gray-400 mb-6">The project you're looking for doesn't exist.</p>
-                    <button
-                        onClick={() => navigate('/dashboard/projects')}
-                        className="px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-black rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-200 transition-all"
-                    >
-                        Back to Projects
-                    </button>
-                </div>
-            </div>
-        );
-    }
+    useEffect(() => {
+        if (!project) {
+            toast.error("Project not found. It may have been deleted.", {
+                id: 'project-not-found'
+            });
+            navigate('/dashboard/projects', { replace: true });
+        }
+    }, [project, navigate]);
+
+    if (!project) return null;
 
     const navItems = [
         { icon: MessageSquare, label: 'Feedbacks', path: `/dashboard/projects/${projectId}`, end: true },

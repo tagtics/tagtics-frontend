@@ -73,19 +73,19 @@ export default function Settings() {
                     </div>
 
                     {/* Danger Zone */}
-                    <div className="h-fit p-4 rounded-2xl border border-red-100 dark:border-red-500/10 bg-red-50/50 dark:bg-red-500/5 shadow-sm dark:shadow-none backdrop-blur-md">
+                    <div className="h-fit p-4 rounded-2xl border border-red-200 dark:border-red-500/30 bg-red-50 dark:bg-red-900/10 shadow-sm dark:shadow-none backdrop-blur-md">
                         <div className="flex items-center gap-3 mb-3">
-                            <div className="p-2 rounded-lg bg-red-100 dark:bg-red-500/20 text-red-500 dark:text-red-400">
+                            <div className="p-2 rounded-lg bg-red-100 dark:bg-red-500/20 text-red-600 dark:text-red-400">
                                 <Trash2 className="w-4 h-4" />
                             </div>
                             <h2 className="text-base font-bold text-red-600 dark:text-red-400">Danger Zone</h2>
                         </div>
 
                         <div className="flex items-center justify-between gap-4">
-                            <div className="text-xs text-gray-500 dark:text-gray-400">
+                            <div className="text-xs text-red-600/80 dark:text-gray-400 font-medium">
                                 Permanently delete your account and all data.
                             </div>
-                            <button className="px-3 py-1.5 rounded-lg bg-red-100 dark:bg-red-500/10 hover:bg-red-200 dark:hover:bg-red-500/20 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 transition-all text-xs font-bold whitespace-nowrap">
+                            <button className="px-3 py-1.5 rounded-lg bg-white dark:bg-red-500/10 hover:bg-red-50 dark:hover:bg-red-500/20 border border-red-200 dark:border-red-500/20 text-red-600 dark:text-red-400 transition-all text-xs font-bold whitespace-nowrap shadow-sm">
                                 Delete Account
                             </button>
                         </div>

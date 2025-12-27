@@ -1,15 +1,17 @@
-import { useState } from 'react';
-import { X } from 'lucide-react';
+import { useState, useEffect } from 'react';
+import { X, Globe, User, Tag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useProjectStore } from '@store/projectStore';
 import { cn } from '@utils/cn';
+import { Project } from '@store/projectStore';
 
 interface AddProjectModalProps {
     isOpen: boolean;
     onClose: () => void;
+    onProjectCreated?: (project: Project) => void;
 }
 
-export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
+export function AddProjectModal({ isOpen, onClose, onProjectCreated }: AddProjectModalProps) {
     const addProject = useProjectStore((state) => state.addProject);
 
     const [formData, setFormData] = useState({
@@ -21,53 +23,48 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
 
     const [errors, setErrors] = useState<Record<string, string>>({});
 
+    // Handle ESC key to close
+    useEffect(() => {
+        const handleEsc = (e: KeyboardEvent) => {
+            if (e.key === 'Escape') onClose();
+        };
+        if (isOpen) window.addEventListener('keydown', handleEsc);
+        return () => window.removeEventListener('keydown', handleEsc);
+    }, [isOpen, onClose]);
+
     const validateUrl = (url: string): boolean => {
         if (!url) return false;
-        // Accept any valid URL (localhost or production)
         return /^https?:\/\//.test(url);
     };
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-
         const newErrors: Record<string, string> = {};
 
-        if (!formData.name.trim()) {
-            newErrors.name = 'Project name is required';
-        }
-
-        if (!formData.devName.trim()) {
-            newErrors.devName = 'Developer name is required';
-        }
-
-        if (!validateUrl(formData.url)) {
-            newErrors.url = 'Please enter a valid URL (e.g., https://example.com or http://localhost:3000)';
-        }
+        if (!formData.name.trim()) newErrors.name = 'Name is required';
+        if (!formData.devName.trim()) newErrors.devName = 'Dev name is required';
+        if (!validateUrl(formData.url)) newErrors.url = 'Valid URL required (https://...)';
 
         if (Object.keys(newErrors).length > 0) {
             setErrors(newErrors);
             return;
         }
 
-        addProject({
+        const newProject = addProject({
             ...formData,
-            isLocal: false // Default to false, can be enabled later in settings
+            isLocal: false
         });
 
-        // Reset form
-        setFormData({
-            name: '',
-            url: '',
-            devName: '',
-            tier: 'pro'
-        });
+        if (onProjectCreated) onProjectCreated(newProject);
+
+        // Reset
+        setFormData({ name: '', url: '', devName: '', tier: 'pro' });
         setErrors({});
         onClose();
     };
 
-    const handleChange = (field: string, value: string | boolean) => {
+    const handleChange = (field: string, value: string) => {
         setFormData((prev) => ({ ...prev, [field]: value }));
-        // Clear error when user starts typing
         if (errors[field]) {
             setErrors((prev) => {
                 const newErrors = { ...prev };
@@ -87,123 +84,116 @@ export function AddProjectModal({ isOpen, onClose }: AddProjectModalProps) {
                         animate={{ opacity: 1 }}
                         exit={{ opacity: 0 }}
                         onClick={onClose}
-                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50"
+                        className="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 cursor-zoom-out"
                     />
 
                     {/* Modal */}
-                    <div className="fixed inset-0 flex items-center justify-center z-50 p-4">
+                    <div className="fixed inset-0 flex items-center justify-center z-50 p-4 pointer-events-none">
                         <motion.div
-                            initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                            initial={{ opacity: 0, scale: 0.95, y: 10 }}
                             animate={{ opacity: 1, scale: 1, y: 0 }}
+                            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+                            transition={{ duration: 0.2 }}
                             onClick={(e) => e.stopPropagation()}
-                            className="bg-white dark:bg-gray-900 rounded-2xl w-full max-w-lg overflow-hidden shadow-2xl relative"
+                            className="pointer-events-auto w-full max-w-[420px] bg-white/90 dark:bg-[#0A0A0A]/90 backdrop-blur-xl border border-gray-200/50 dark:border-white/10 rounded-2xl shadow-2xl overflow-hidden"
                         >
-                            <div className="p-6 border-b border-gray-100 dark:border-white/10">
-                                <div className="flex items-center justify-between">
-                                    <h2 className="text-xl font-bold text-gray-900 dark:text-white">Add New Project</h2>
-                                    <button
-                                        onClick={onClose}
-                                        className="p-2 hover:bg-gray-100 dark:hover:bg-white/10 rounded-lg transition-colors text-gray-500 dark:text-gray-400"
-                                    >
-                                        <X className="w-5 h-5" />
-                                    </button>
-                                </div>
+                            {/* Minimalism Header */}
+                            <div className="px-6 pt-6 flex items-center justify-between">
+                                <h2 className="text-lg font-bold text-gray-900 dark:text-white tracking-tight">
+                                    New Project
+                                </h2>
+                                <button
+                                    onClick={onClose}
+                                    className="p-1.5 hover:bg-gray-100 dark:hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-gray-900 dark:hover:text-white"
+                                >
+                                    <X className="w-4 h-4" />
+                                </button>
                             </div>
 
-                            {/* Form */}
-                            <form onSubmit={handleSubmit} className="space-y-5 p-6">
+                            <form onSubmit={handleSubmit} className="p-6 space-y-4">
+
                                 {/* Project Name */}
-                                <div>
-                                    <div className="flex justify-between mb-2">
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            Project Name *
-                                        </label>
-                                        <span className="text-xs text-gray-500">
-                                            {formData.name.length}/30
-                                        </span>
+                                <div className="group">
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <Tag className="h-4 w-4 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                                        </div>
+                                        <input
+                                            type="text"
+                                            maxLength={30}
+                                            value={formData.name}
+                                            onChange={(e) => handleChange('name', e.target.value)}
+                                            className={cn(
+                                                "w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-white/5 border rounded-xl text-sm font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all",
+                                                errors.name
+                                                    ? "border-red-500 focus:ring-red-500/20"
+                                                    : "border-gray-200 dark:border-white/5 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 dark:focus:ring-blue-500/10 outline-none"
+                                            )}
+                                            placeholder="Project Name"
+                                            autoFocus
+                                        />
                                     </div>
-                                    <input
-                                        type="text"
-                                        maxLength={30}
-                                        value={formData.name}
-                                        onChange={(e) => handleChange('name', e.target.value)}
-                                        className={cn(
-                                            "w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all",
-                                            errors.name ? "border-red-500" : "border-gray-200 dark:border-white/10 focus:border-blue-500"
-                                        )}
-                                        placeholder="My Awesome App"
-                                    />
-                                    {errors.name && (
-                                        <p className="mt-1 text-sm text-red-400">{errors.name}</p>
-                                    )}
+                                    {errors.name && <p className="mt-1 text-[10px] text-red-500 font-medium pl-1">{errors.name}</p>}
                                 </div>
 
-                                {/* Website URL */}
-                                <div>
-                                    <div className="flex justify-between mb-2">
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            Website URL *
-                                        </label>
-                                        <span className="text-xs text-gray-500">
-                                            {formData.url.length}/100
-                                        </span>
+                                {/* URL */}
+                                <div className="group">
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <Globe className="h-4 w-4 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                                        </div>
+                                        <input
+                                            type="text"
+                                            maxLength={100}
+                                            value={formData.url}
+                                            onChange={(e) => handleChange('url', e.target.value)}
+                                            className={cn(
+                                                "w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-white/5 border rounded-xl text-sm font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all font-mono",
+                                                errors.url
+                                                    ? "border-red-500 focus:ring-red-500/20"
+                                                    : "border-gray-200 dark:border-white/5 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 dark:focus:ring-blue-500/10 outline-none"
+                                            )}
+                                            placeholder="https://example.com"
+                                        />
                                     </div>
-                                    <input
-                                        type="text"
-                                        maxLength={100}
-                                        value={formData.url}
-                                        onChange={(e) => handleChange('url', e.target.value)}
-                                        className={cn(
-                                            "w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all font-mono text-sm",
-                                            errors.url ? "border-red-500" : "border-gray-200 dark:border-white/10 focus:border-blue-500"
-                                        )}
-                                        placeholder="https://example.com or http://localhost:3000"
-                                    />
-                                    {errors.url && (
-                                        <p className="mt-1 text-sm text-red-400">{errors.url}</p>
-                                    )}
+                                    {errors.url && <p className="mt-1 text-[10px] text-red-500 font-medium pl-1">{errors.url}</p>}
                                 </div>
 
-                                {/* Developer Name */}
-                                <div>
-                                    <div className="flex justify-between mb-2">
-                                        <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                            Developer Name *
-                                        </label>
-                                        <span className="text-xs text-gray-500">
-                                            {formData.devName.length}/30
-                                        </span>
+                                {/* Dev Name */}
+                                <div className="group">
+                                    <div className="relative">
+                                        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                            <User className="h-4 w-4 text-gray-400 group-focus-within:text-blue-500 transition-colors" />
+                                        </div>
+                                        <input
+                                            type="text"
+                                            maxLength={30}
+                                            value={formData.devName}
+                                            onChange={(e) => handleChange('devName', e.target.value)}
+                                            className={cn(
+                                                "w-full pl-10 pr-4 py-3 bg-gray-50 dark:bg-white/5 border rounded-xl text-sm font-medium text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 transition-all",
+                                                errors.devName
+                                                    ? "border-red-500 focus:ring-red-500/20"
+                                                    : "border-gray-200 dark:border-white/5 focus:border-blue-500 dark:focus:border-blue-500 focus:ring-4 focus:ring-blue-500/10 dark:focus:ring-blue-500/10 outline-none"
+                                            )}
+                                            placeholder="Developer Name"
+                                        />
                                     </div>
-                                    <input
-                                        type="text"
-                                        maxLength={30}
-                                        value={formData.devName}
-                                        onChange={(e) => handleChange('devName', e.target.value)}
-                                        className={cn(
-                                            "w-full px-4 py-3 bg-gray-50 dark:bg-white/5 border rounded-xl text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all",
-                                            errors.devName ? "border-red-500" : "border-gray-200 dark:border-white/10 focus:border-blue-500"
-                                        )}
-                                        placeholder="John Doe"
-                                    />
-                                    {errors.devName && (
-                                        <p className="mt-1 text-sm text-red-400">{errors.devName}</p>
-                                    )}
+                                    {errors.devName && <p className="mt-1 text-[10px] text-red-500 font-medium pl-1">{errors.devName}</p>}
                                 </div>
 
-
-
-                                {/* Buttons */}
-                                <div className="flex gap-3 pt-4">
+                                {/* Actions */}
+                                <div className="pt-2 flex gap-3">
                                     <button
                                         type="button"
                                         onClick={onClose}
-                                        className="flex-1 px-6 py-3 bg-white/5 hover:bg-white/10 border border-white/10 rounded-xl text-white font-medium transition-all"
+                                        className="flex-1 px-4 py-2.5 bg-transparent hover:bg-gray-100 dark:hover:bg-white/5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white rounded-xl text-xs font-bold transition-all"
                                     >
                                         Cancel
                                     </button>
                                     <button
                                         type="submit"
-                                        className="flex-1 px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-500 hover:to-purple-500 rounded-xl text-white font-bold transition-all shadow-lg shadow-blue-500/20"
+                                        className="flex-[2] px-4 py-2.5 bg-gray-900 dark:bg-white hover:bg-gray-800 dark:hover:bg-gray-100 text-white dark:text-black rounded-xl text-xs font-bold transition-all shadow-lg shadow-gray-900/10 dark:shadow-white/5"
                                     >
                                         Create Project
                                     </button>

@@ -56,8 +56,8 @@ export function DashboardLayout() {
                         "fixed inset-y-0 z-40 transition-transform duration-300",
                         // Mobile: right side, Desktop: left side  
                         "right-0 lg:right-auto lg:left-0",
-                        // Desktop: always visible, relative positioning
-                        "lg:relative lg:translate-x-0",
+                        // Desktop: sticky positioning to stay in view
+                        "lg:sticky lg:top-0 lg:h-screen lg:translate-x-0",
                         // Mobile: hide by default (slide right), show when menu open
                         isMobileMenuOpen ? "translate-x-0" : "translate-x-full lg:translate-x-0"
                     )}>

@@ -1,18 +1,26 @@
 import { useSearchParams, useParams } from 'react-router-dom';
-import { MOCK_PROJECTS, MOCK_FEEDBACKS } from '@data/mock';
+import { useProjectStore } from '@store/projectStore';
+import { MOCK_FEEDBACKS } from '@data/mock';
 import { AlertCircle, CheckCircle, Clock, Layers } from 'lucide-react';
 import SEO from '@components/common/SEO';
+import { ProjectIntegrationGuide } from '@components/dashboard/ProjectIntegrationGuide';
 
 export default function ProjectFeedbacks() {
     const { projectId } = useParams();
     const [searchParams, setSearchParams] = useSearchParams();
     const selectedComponent = searchParams.get('component');
 
-    const project = MOCK_PROJECTS.find(p => p.id === projectId);
+    const project = useProjectStore((state) => state.getProjectById(projectId!));
+    // TODO: Connect to real feedbacks store later
     const feedbacks = MOCK_FEEDBACKS.filter(f => f.projectId === projectId);
 
     if (!project) {
         return <div className="text-white">Project not found</div>;
+    }
+
+    // Empty State for Feedbacks
+    if (feedbacks.length === 0) {
+        return <ProjectIntegrationGuide project={project} />;
     }
 
     // Group feedbacks by component

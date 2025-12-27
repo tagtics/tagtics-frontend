@@ -22,7 +22,7 @@ interface ProjectStore {
     selectedProject: Project | null;
 
     // Actions
-    addProject: (project: Omit<Project, 'id' | 'apiKey' | 'createdAt' | 'feedbackCount' | 'status'>) => void;
+    addProject: (projectData: Omit<Project, 'id' | 'apiKey' | 'createdAt' | 'feedbackCount' | 'status'>) => Project;
     updateProject: (id: string, updates: Partial<Project>) => void;
     deleteProject: (id: string) => void;
     regenerateApiKey: (id: string) => string;
@@ -65,6 +65,8 @@ export const useProjectStore = create<ProjectStore>((set, get) => ({
         set((state) => ({
             projects: [...state.projects, newProject]
         }));
+
+        return newProject;
     },
 
     updateProject: (id, updates) => {

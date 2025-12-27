@@ -6,13 +6,14 @@ import { motion } from 'framer-motion';
 import { cn } from '@utils/cn';
 import SEO from '@components/common/SEO';
 
+import { toast } from 'sonner';
+
 export default function ProjectSettings() {
     const { projectId } = useParams<{ projectId: string }>();
     const navigate = useNavigate();
 
     const project = useProjectStore((state) => state.getProjectById(projectId!));
     const updateProject = useProjectStore((state) => state.updateProject);
-    const deleteProject = useProjectStore((state) => state.deleteProject);
     const regenerateApiKey = useProjectStore((state) => state.regenerateApiKey);
 
     const [formData, setFormData] = useState({
@@ -49,11 +50,11 @@ export default function ProjectSettings() {
         return (
             <div className="flex items-center justify-center min-h-[400px]">
                 <div className="text-center">
-                    <h2 className="text-2xl font-bold text-white mb-2">Project Not Found</h2>
-                    <p className="text-gray-400 mb-6">The project you're looking for doesn't exist.</p>
+                    <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Project Not Found</h2>
+                    <p className="text-gray-600 dark:text-gray-400 mb-6">The project you're looking for doesn't exist.</p>
                     <button
                         onClick={() => navigate('/dashboard/projects')}
-                        className="px-6 py-3 bg-white text-black rounded-full font-bold hover:bg-gray-200 transition-all"
+                        className="px-6 py-3 bg-gray-900 dark:bg-white text-white dark:text-gray-900 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-200 transition-all"
                     >
                         Back to Projects
                     </button>
@@ -87,19 +88,24 @@ export default function ProjectSettings() {
         if (!validateForm()) return;
 
         updateProject(project.id, formData);
+        toast.success("Project updated successfully");
         setIsSaved(true);
         setTimeout(() => setIsSaved(false), 2000);
     };
 
     const handleRegenerate = () => {
         regenerateApiKey(project.id);
+        toast.success("API Key regenerated");
         setShowRegenerateConfirm(false);
         setShowApiKey(true);
     };
 
     const handleDelete = () => {
-        deleteProject(project.id);
-        navigate('/dashboard/projects');
+        // Navigate to projects page and trigger delete there to avoid race conditions/blank screens
+        navigate('/dashboard/projects', {
+            replace: true,
+            state: { deleteProjectId: project.id }
+        });
     };
 
     const copyToClipboard = () => {
@@ -133,7 +139,7 @@ export default function ProjectSettings() {
                 {/* Project Name */}
                 <div>
                     <div className="flex justify-between mb-1.5">
-                        <label className="block text-xs font-medium text-gray-300">
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
                             Project Name
                         </label>
                         <span className="text-[10px] text-gray-500">
@@ -158,7 +164,7 @@ export default function ProjectSettings() {
                 {/* Website URL */}
                 <div>
                     <div className="flex items-center justify-between mb-1.5">
-                        <label className="block text-xs font-medium text-gray-300">
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
                             Website URL
                         </label>
                         <span className="text-[10px] text-gray-500 flex items-center gap-1">
@@ -170,7 +176,7 @@ export default function ProjectSettings() {
                         type="text"
                         value={formData.url}
                         readOnly
-                        className="w-full px-3 py-2 bg-black/20 border border-white/5 rounded-lg text-sm text-gray-400 cursor-not-allowed outline-none font-mono"
+                        className="w-full px-3 py-2 bg-gray-100 dark:bg-black/20 border border-gray-200 dark:border-white/5 rounded-lg text-sm text-gray-500 dark:text-gray-400 cursor-not-allowed outline-none font-mono"
                     />
                 </div>
 
@@ -180,9 +186,9 @@ export default function ProjectSettings() {
                         <div className="flex items-center gap-2">
                             <div className={cn(
                                 "w-2 h-2 rounded-full transition-colors",
-                                formData.isLocal ? "bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.5)]" : "bg-gray-500"
+                                formData.isLocal ? "bg-blue-400 shadow-[0_0_8px_rgba(96,165,250,0.5)]" : "bg-gray-400 dark:bg-gray-500"
                             )}></div>
-                            <label className="text-xs font-medium text-gray-300">
+                            <label className="text-xs font-medium text-gray-700 dark:text-gray-300">
                                 Local Testing Mode
                             </label>
                         </div>
@@ -191,7 +197,7 @@ export default function ProjectSettings() {
                             onClick={() => handleChange('isLocal', !formData.isLocal)}
                             className={cn(
                                 "relative inline-flex h-5 w-9 items-center rounded-full transition-colors",
-                                formData.isLocal ? "bg-blue-600" : "bg-gray-600"
+                                formData.isLocal ? "bg-blue-600" : "bg-gray-300 dark:bg-gray-600"
                             )}
                         >
                             <span
@@ -204,9 +210,9 @@ export default function ProjectSettings() {
                     </div>
 
                     {formData.isLocal && (
-                        <div className="space-y-2 pt-2 border-t border-white/10">
+                        <div className="space-y-2 pt-2 border-t border-gray-200 dark:border-white/10">
                             <div className="flex justify-between mb-1">
-                                <label className="block text-xs font-medium text-gray-300">
+                                <label className="block text-xs font-medium text-gray-700 dark:text-gray-300">
                                     Localhost Port
                                 </label>
                                 <span className="text-[10px] text-gray-500">
@@ -220,15 +226,15 @@ export default function ProjectSettings() {
                                 onChange={(e) => handleChange('localPort', e.target.value)}
                                 placeholder="3000"
                                 className={cn(
-                                    "w-full px-3 py-2 bg-white/5 border rounded-lg text-sm text-white placeholder-gray-500 outline-none transition-all",
-                                    errors.localPort ? "border-red-500" : "border-white/10 focus:border-blue-500"
+                                    "w-full px-3 py-2 bg-white dark:bg-white/5 border rounded-lg text-sm text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500 outline-none transition-all",
+                                    errors.localPort ? "border-red-500" : "border-gray-200 dark:border-white/10 focus:border-blue-500"
                                 )}
                             />
                             {errors.localPort && (
                                 <p className="text-[10px] text-red-400">{errors.localPort}</p>
                             )}
-                            <div className="p-2 bg-blue-500/10 border border-blue-500/20 rounded-lg">
-                                <p className="text-[10px] text-blue-400 leading-relaxed">
+                            <div className="p-2 bg-blue-50 dark:bg-blue-500/10 border border-blue-100 dark:border-blue-500/20 rounded-lg">
+                                <p className="text-[10px] text-blue-600 dark:text-blue-400 leading-relaxed">
                                     📍 Testing URL: <span className="font-mono">http://localhost:{formData.localPort || '3000'}</span>
                                 </p>
                                 <p className="text-[10px] text-gray-500 mt-1">
@@ -242,7 +248,7 @@ export default function ProjectSettings() {
                 {/* Developer Name */}
                 <div>
                     <div className="flex justify-between mb-1.5">
-                        <label className="block text-xs font-medium text-gray-300 mb-1.5">
+                        <label className="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                             Developer Name
                         </label>
                         <span className="text-[10px] text-gray-500">
@@ -297,11 +303,11 @@ export default function ProjectSettings() {
 
                     <div className="p-3 bg-gray-50 dark:bg-black/20 rounded-lg border border-gray-200 dark:border-white/5">
                         <div className="flex items-center justify-between mb-2">
-                            <span className="text-xs text-gray-400 font-medium">Your API Key</span>
+                            <span className="text-xs text-gray-500 dark:text-gray-400 font-medium">Your API Key</span>
                             <div className="flex gap-1">
                                 <button
                                     onClick={() => setShowApiKey(!showApiKey)}
-                                    className="p-1.5 rounded text-gray-400 hover:text-white hover:bg-white/10 transition-all"
+                                    className="p-1.5 rounded text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10 transition-all"
                                     title={showApiKey ? "Hide API Key" : "Show API Key"}
                                 >
                                     {showApiKey ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
@@ -329,7 +335,7 @@ export default function ProjectSettings() {
                                 </button>
                             </div>
                         </div>
-                        <code className="text-xs text-gray-300 font-mono break-all block">
+                        <code className="text-xs text-gray-600 dark:text-gray-300 font-mono break-all block">
                             {showApiKey ? project.apiKey : `${project.apiKey.slice(0, 8)}${'•'.repeat(24)}`}
                         </code>
                     </div>
@@ -338,26 +344,26 @@ export default function ProjectSettings() {
                     {!showRegenerateConfirm ? (
                         <button
                             onClick={() => setShowRegenerateConfirm(true)}
-                            className="w-full px-4 py-2 bg-orange-600/20 hover:bg-orange-600/30 border border-orange-500/30 rounded-lg text-orange-400 font-medium transition-all flex items-center justify-center gap-2 text-sm"
+                            className="w-full px-4 py-2 bg-orange-50 dark:bg-orange-600/20 hover:bg-orange-100 dark:hover:bg-orange-600/30 border border-orange-200 dark:border-orange-500/30 rounded-lg text-orange-600 dark:text-orange-400 font-bold transition-all flex items-center justify-center gap-2 text-sm"
                         >
                             <RefreshCw className="w-4 h-4" />
                             Regenerate API Key
                         </button>
                     ) : (
-                        <div className="p-3 bg-orange-600/10 border border-orange-500/30 rounded-lg">
-                            <p className="text-orange-400 text-xs mb-3">
+                        <div className="p-3 bg-orange-50 dark:bg-orange-600/10 border border-orange-200 dark:border-orange-500/30 rounded-lg">
+                            <p className="text-orange-800 dark:text-orange-400 text-xs mb-3 font-medium">
                                 ⚠️ This will invalidate your current API key. Are you sure?
                             </p>
                             <div className="flex gap-2">
                                 <button
                                     onClick={() => setShowRegenerateConfirm(false)}
-                                    className="flex-1 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded text-white text-xs transition-all"
+                                    className="flex-1 px-3 py-1.5 bg-white hover:bg-orange-50 dark:bg-white/5 dark:hover:bg-white/10 border border-orange-200 dark:border-white/10 rounded text-gray-700 dark:text-white text-xs font-medium transition-all"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     onClick={handleRegenerate}
-                                    className="flex-1 px-3 py-1.5 bg-orange-600 hover:bg-orange-500 rounded text-white font-medium text-xs transition-all"
+                                    className="flex-1 px-3 py-1.5 bg-orange-600 hover:bg-orange-500 rounded text-white font-bold text-xs transition-all shadow-md shadow-orange-500/20"
                                 >
                                     Yes, Regenerate
                                 </button>
@@ -370,33 +376,33 @@ export default function ProjectSettings() {
                 <motion.div
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.2 }}
-                    className="p-5 rounded-2xl border border-red-500/30 bg-red-600/5 backdrop-blur-md space-y-4"
+                    className="p-5 rounded-2xl border border-red-200 dark:border-red-500/30 bg-red-50 dark:bg-red-900/10 backdrop-blur-md space-y-4"
                 >
-                    <h2 className="text-base font-bold text-red-400 mb-4">Danger Zone</h2>
+                    <h2 className="text-base font-bold text-red-600 dark:text-red-400 mb-4">Danger Zone</h2>
 
                     {!showDeleteConfirm ? (
                         <button
                             onClick={() => setShowDeleteConfirm(true)}
-                            className="w-full px-4 py-2 bg-red-600/20 hover:bg-red-600/30 border border-red-500/30 rounded-lg text-red-400 font-medium transition-all flex items-center justify-center gap-2 text-sm"
+                            className="w-full px-4 py-2 bg-white dark:bg-red-600/20 hover:bg-red-50 dark:hover:bg-red-600/30 border border-red-200 dark:border-red-500/30 rounded-lg text-red-600 dark:text-red-400 font-bold transition-all flex items-center justify-center gap-2 text-sm shadow-sm"
                         >
                             <Trash2 className="w-4 h-4" />
                             Delete Project
                         </button>
                     ) : (
-                        <div className="p-3 bg-red-600/10 border border-red-500/30 rounded-lg">
-                            <p className="text-red-400 text-xs mb-3">
+                        <div className="p-3 bg-red-100/50 dark:bg-red-600/10 border border-red-200 dark:border-red-500/30 rounded-lg">
+                            <p className="text-red-600 dark:text-red-400 text-xs mb-3 font-medium">
                                 ⚠️ This action cannot be undone. All feedback data will be lost.
                             </p>
                             <div className="flex gap-2">
                                 <button
                                     onClick={() => setShowDeleteConfirm(false)}
-                                    className="flex-1 px-3 py-1.5 bg-white/5 hover:bg-white/10 border border-white/10 rounded text-white text-xs transition-all"
+                                    className="flex-1 px-3 py-1.5 bg-white hover:bg-red-50 dark:bg-white/5 dark:hover:bg-white/10 border border-red-200 dark:border-white/10 rounded text-gray-700 dark:text-white text-xs font-medium transition-all"
                                 >
                                     Cancel
                                 </button>
                                 <button
                                     onClick={handleDelete}
-                                    className="flex-1 px-3 py-1.5 bg-red-600 hover:bg-red-500 rounded text-white font-medium text-xs transition-all"
+                                    className="flex-1 px-3 py-1.5 bg-red-600 hover:bg-red-500 rounded text-white font-bold text-xs transition-all shadow-md shadow-red-500/20"
                                 >
                                     Yes, Delete Forever
                                 </button>

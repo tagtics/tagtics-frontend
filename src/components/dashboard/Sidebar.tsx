@@ -22,7 +22,7 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
         <aside
             className={cn(
                 "h-screen p-3 flex flex-col bg-white dark:bg-black/20 shadow-xl dark:shadow-none backdrop-blur-xl border-r border-gray-100 dark:border-white/5 transition-all duration-300 ease-in-out",
-                isCollapsed ? "w-20" : "w-72"
+                isCollapsed ? "w-20" : "w-60"
             )}
         >
             {/* Brand & Toggle */}
@@ -90,7 +90,7 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
                         className={({ isActive }) =>
                             cn(
                                 "relative flex items-center gap-3 px-3 py-2 rounded-xl transition-all duration-300 group overflow-hidden",
-                                isActive ? "text-gray-900 dark:text-white" : "text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white",
+                                isActive ? "text-gray-900 dark:text-white" : "text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white",
                                 isCollapsed ? "justify-center" : ""
                             )
                         }
@@ -109,7 +109,7 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
                                 <item.icon
                                     className={cn(
                                         "w-5 h-5 relative z-10 transition-colors duration-300 shrink-0",
-                                        isActive ? "text-blue-600 dark:text-blue-400" : "group-hover:text-blue-500 dark:group-hover:text-blue-300"
+                                        isActive ? "text-blue-600 dark:text-blue-400" : "text-gray-500 group-hover:text-blue-600 dark:group-hover:text-blue-300"
                                     )}
                                 />
 
@@ -119,7 +119,7 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
                                             initial={{ opacity: 0, width: 0 }}
                                             animate={{ opacity: 1, width: 'auto' }}
                                             exit={{ opacity: 0, width: 0 }}
-                                            className="font-medium relative z-10 whitespace-nowrap overflow-hidden"
+                                            className="font-medium relative z-10 truncate"
                                         >
                                             {item.label}
                                         </motion.span>
@@ -135,12 +135,12 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
             <div className="mt-auto space-y-2 px-2 pb-4">
                 <button
                     className={cn(
-                        "flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all group overflow-hidden",
+                        "flex items-center gap-3 w-full px-4 py-3 rounded-xl text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-gray-100 dark:hover:bg-white/5 transition-all group overflow-hidden",
                         isCollapsed ? "justify-center px-2" : ""
                     )}
                     title={isCollapsed ? "Sign Out" : undefined}
                 >
-                    <LogOut className="w-5 h-5 group-hover:text-red-500 dark:group-hover:text-red-400 transition-colors shrink-0" />
+                    <LogOut className="w-5 h-5 text-gray-500 group-hover:text-red-600 dark:group-hover:text-red-400 transition-colors shrink-0" />
                     {!isCollapsed && <span className="font-medium whitespace-nowrap">Sign Out</span>}
                 </button>
             </div>
