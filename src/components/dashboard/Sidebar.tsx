@@ -1,4 +1,4 @@
-import { LayoutDashboard, FolderKanban, Settings, LogOut, PanelLeftClose, PanelLeft, X, CreditCard } from 'lucide-react';
+import { LayoutDashboard, FolderKanban, Settings, LogOut, PanelLeftClose, PanelLeftOpen, X, CreditCard } from 'lucide-react';
 import { NavLink, Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@utils/cn';
@@ -73,7 +73,7 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
                     {isMobileMenuOpen ? (
                         <X className="w-4 h-4" />
                     ) : (
-                        isCollapsed ? <PanelLeft className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />
+                        isCollapsed ? <PanelLeftOpen className="w-4 h-4" /> : <PanelLeftClose className="w-4 h-4" />
                     )}
                 </button>
             </div>

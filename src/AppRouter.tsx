@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { LoadingFallback } from "@utils/LoadingFallback";
 
@@ -13,6 +13,11 @@ export function AppRouter() {
   const Settings = lazy(() => import('@pages/dashboard/Settings'));
   const Subscription = lazy(() => import('@pages/dashboard/Subscription'));
   const NotFound = lazy(() => import('@pages/NotFound'));
+
+  // Docs Imports
+  const DocsLayout = lazy(() => import('@layouts/DocsLayout').then(module => ({ default: module.DocsLayout })));
+  const DocsOverview = lazy(() => import('@pages/docs/Overview'));
+  const DocsImplementation = lazy(() => import('@pages/docs/Implementation'));
 
   return <BrowserRouter
     future={{
@@ -43,6 +48,15 @@ export function AppRouter() {
 
           <Route path="settings" element={<Settings />} />
           <Route path="subscription" element={<Subscription />} />
+        </Route>
+
+        {/* Documentation Routes */}
+        <Route path="docs" element={<DocsLayout />}>
+          <Route index element={<Navigate to="overview/intro" replace />} />
+          <Route path="overview" element={<Navigate to="intro" replace />} />
+          <Route path="overview/:section" element={<DocsOverview />} />
+          <Route path="implementation" element={<Navigate to="overview" replace />} />
+          <Route path="implementation/:framework" element={<DocsImplementation />} />
         </Route>
 
         <Route path="*" element={<NotFound />} />
