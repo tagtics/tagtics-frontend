@@ -3,6 +3,7 @@
 > **Capture precise UI feedback exactly where it matters. No guesswork, just actionable insights.**
 
 [![Live Demo](https://img.shields.io/badge/tagtics.online-blueviolet?style=for-the-badge)](https://www.tagtics.online)
+[![Documentation](https://img.shields.io/badge/Docs-tagtics.online%2Fdocs-blue?style=for-the-badge)](https://tagtics.online/docs)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.0-3178C6?style=flat&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![React](https://img.shields.io/badge/React-19.2.3-61DAFB?style=flat&logo=react&logoColor=black)](https://reactjs.org/)
 [![Supabase](https://img.shields.io/badge/Supabase-PostgreSQL-3ECF8E?style=flat&logo=supabase&logoColor=white)](https://supabase.com/)
