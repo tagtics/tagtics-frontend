@@ -37,9 +37,12 @@ function FeatureCard({ icon: Icon, title, description, badge }: { icon: any, tit
             variants={item}
             className="group p-4 rounded-xl border border-gray-200 dark:border-white/10 bg-white/50 dark:bg-white/5 shadow-sm hover:shadow-md dark:shadow-none hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300"
         >
-            <div className="flex items-start justify-between mb-2">
-                <div className="p-1.5 rounded-lg bg-blue-50 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300">
-                    <Icon className="w-4 h-4" />
+            <div className="flex items-center justify-between mb-2">
+                <div className="flex items-center gap-3">
+                    <div className="p-1.5 rounded-lg bg-blue-50 dark:bg-blue-500/20 text-blue-600 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300">
+                        <Icon className="w-4 h-4" />
+                    </div>
+                    <h3 className="text-sm font-bold text-gray-900 dark:text-white">{title}</h3>
                 </div>
                 {badge && (
                     <span className="px-2 py-0.5 rounded-full bg-purple-100 dark:bg-purple-500/20 text-purple-600 dark:text-purple-300 text-[10px] font-bold uppercase tracking-wider">
@@ -47,7 +50,6 @@ function FeatureCard({ icon: Icon, title, description, badge }: { icon: any, tit
                     </span>
                 )}
             </div>
-            <h3 className="text-sm font-bold text-gray-900 dark:text-white mb-1">{title}</h3>
             <p className="text-xs text-gray-500 dark:text-gray-400 leading-relaxed">
                 {description}
             </p>
@@ -277,20 +279,20 @@ export default function Overview() {
                                 className="p-1 rounded-2xl bg-gradient-to-br from-blue-500/10 to-purple-500/10 border border-blue-500/20"
                             >
                                 <div className="p-5 rounded-xl bg-white/50 dark:bg-black/40 backdrop-blur-sm">
-                                    <div className="flex items-start gap-4">
-                                        <div className="p-2.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
+                                    <div className="flex items-center gap-3 mb-3">
+                                        <div className="inline-flex p-2.5 rounded-lg bg-blue-500/10 text-blue-600 dark:text-blue-400">
                                             <Zap className="w-5 h-5" />
                                         </div>
-                                        <div>
-                                            <h3 className="text-base font-bold text-gray-900 dark:text-white mb-1.5">
-                                                Why Tagtics?
-                                            </h3>
-                                            <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
-                                                Traditional feedback forms are disconnected from the UI. Users say "the button is broken",
-                                                but developers need to know <em>which</em> button, on <em>which</em> page, and with <em>what</em> state.
-                                                Tagtics solves this by anchoring feedback to the DOM.
-                                            </p>
-                                        </div>
+                                        <h3 className="text-base font-bold text-gray-900 dark:text-white">
+                                            Why Tagtics?
+                                        </h3>
+                                    </div>
+                                    <div>
+                                        <p className="text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                                            Traditional feedback forms are disconnected from the UI. Users say "the button is broken",
+                                            but developers need to know <em>which</em> button, on <em>which</em> page, and with <em>what</em> state.
+                                            Tagtics solves this by anchoring feedback to the DOM.
+                                        </p>
                                     </div>
                                 </div>
                             </motion.div>

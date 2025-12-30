@@ -29,13 +29,13 @@ export const Navbar: React.FC = () => {
         <div className="hidden md:flex items-center gap-2">
           <ThemeToggle />
           <nav className="flex items-center gap-1">
-            <a href="/docs" className="text-sm font-medium text-gray-600 dark:text-white/80 hover:text-gray-900 dark:hover:text-white px-4 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 transition-all duration-300">
+            <a href="/docs" className="text-sm font-medium text-gray-600 dark:text-white/80 hover:text-gray-900 dark:hover:text-white px-5 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 border border-transparent hover:border-gray-200 dark:hover:border-white/10 transition-all duration-300">
               Docs
             </a>
           </nav>
           <a
             href="/dashboard"
-            className="px-5 py-2 rounded-full bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 border border-gray-200 dark:border-white/10 transition-all duration-300 backdrop-blur-sm text-sm font-medium text-gray-900 dark:text-white shrink-0"
+            className="text-sm font-medium text-gray-600 dark:text-white/80 hover:text-gray-900 dark:hover:text-white px-5 py-2 rounded-full hover:bg-gray-100 dark:hover:bg-white/10 border border-transparent hover:border-gray-200 dark:hover:border-white/10 transition-all duration-300 backdrop-blur-sm shrink-0"
           >
             {isAuthenticated ? 'Dashboard' : 'Login'}
           </a>
@@ -54,7 +54,7 @@ export const Navbar: React.FC = () => {
       <div className={`${isMenuOpen ? 'flex flex-col absolute top-full right-0 mt-4 w-64 bg-white/95 dark:bg-black/95 rounded-2xl border border-gray-200 dark:border-white/10 p-4 space-y-2 shadow-xl origin-top-right backdrop-blur-xl' : 'hidden'} md:hidden`}>
         <a
           href="/dashboard"
-          className="px-5 py-3 rounded-xl bg-gray-100 dark:bg-white/10 hover:bg-gray-200 dark:hover:bg-white/20 transition-all duration-300 text-sm font-medium block w-full text-center text-gray-900 dark:text-white"
+          className="px-5 py-3 rounded-xl hover:bg-gray-100 dark:hover:bg-white/10 transition-all duration-300 text-sm font-medium block w-full text-center text-gray-900 dark:text-white"
         >
           {isAuthenticated ? 'Dashboard' : 'Login'}
         </a>

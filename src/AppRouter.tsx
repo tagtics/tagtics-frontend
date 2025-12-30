@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import { lazy, Suspense } from "react";
 import { LoadingFallback } from "@utils/LoadingFallback";
 
@@ -12,19 +12,15 @@ export function AppRouter() {
   const ProjectSettings = lazy(() => import('@pages/dashboard/ProjectSettings'));
   const Settings = lazy(() => import('@pages/dashboard/Settings'));
   const Subscription = lazy(() => import('@pages/dashboard/Subscription'));
-  const NotFound = lazy(() => import('@pages/NotFound'));
+  const NotFound = lazy(() => import('@pages/errors/NotFound'));
+  const ServerError = lazy(() => import('@pages/errors/ServerError'));
 
   // Docs Imports
   const DocsLayout = lazy(() => import('@layouts/DocsLayout').then(module => ({ default: module.DocsLayout })));
   const DocsOverview = lazy(() => import('@pages/docs/Overview'));
   const DocsImplementation = lazy(() => import('@pages/docs/Implementation'));
 
-  return <BrowserRouter
-    future={{
-      v7_startTransition: true,
-      v7_relativeSplatPath: true,
-    }}
-  >
+  return (
     <Suspense fallback={<LoadingFallback />}>
       <Routes>
         <Route path="/" element={<Home />} />
@@ -60,7 +56,8 @@ export function AppRouter() {
         </Route>
 
         <Route path="*" element={<NotFound />} />
+        <Route path="/500" element={<ServerError />} />
       </Routes>
     </Suspense>
-  </BrowserRouter>;
+  );
 }
