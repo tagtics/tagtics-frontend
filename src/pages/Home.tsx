@@ -86,7 +86,6 @@ export default function Home() {
         <FeaturesSection />
         <HowItWorksSection />
         <Footer />
-        <Footer />
         <script type="application/ld+json">
           {JSON.stringify({
             "@context": "https://schema.org",
