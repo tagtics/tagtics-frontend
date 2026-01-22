@@ -1,4 +1,6 @@
 import { useEffect } from 'react';
+import NProgress from 'nprogress';
+import 'nprogress/nprogress.css';
 import { AppRouter } from '@/AppRouter';
 import { BrowserRouter } from 'react-router-dom';
 import { ErrorBoundary } from '@components/common/ErrorBoundary';
@@ -8,6 +10,7 @@ import { Toaster } from 'sonner';
 
 export function App() {
     useEffect(() => {
+        NProgress.configure({ showSpinner: false });
         // Global Initialization
         Tagtics.init({
             apiKey: 'TEST_KEY',
@@ -25,7 +28,7 @@ export function App() {
     return (
         <BrowserRouter
             future={{
-                v7_startTransition: true,
+                v7_startTransition: false,
                 v7_relativeSplatPath: true,
             }}
         >

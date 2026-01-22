@@ -1,6 +1,13 @@
-import React from 'react';
+import NProgress from 'nprogress';
+import React, { useEffect } from 'react';
 
 export const LoadingFallback: React.FC = () => {
+  useEffect(() => {
+    NProgress.start();
+    return () => {
+      NProgress.done();
+    };
+  }, []);
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-80 z-50">
       <div className="flex flex-col items-center space-y-4">

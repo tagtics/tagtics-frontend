@@ -8,6 +8,9 @@ importers:
 
   .:
     dependencies:
+      '@types/nprogress':
+        specifier: ^0.2.3
+        version: 0.2.3
       '@types/react-syntax-highlighter':
         specifier: ^15.5.13
         version: 15.5.13
@@ -26,6 +29,9 @@ importers:
       lucide-react:
         specifier: 0.522.0
         version: 0.522.0(react@19.2.3)
+      nprogress:
+        specifier: ^0.2.0
+        version: 0.2.0
       react:
         specifier: ^19.2.3
         version: 19.2.3
@@ -803,6 +809,9 @@ packages:
   '@types/node@20.19.20':
     resolution: {integrity: sha512-2Q7WS25j4pS1cS8yw3d6buNCVJukOTeQ39bAnwR6sOJbaxvyCGebzTMypDFN82CxBLnl+lSWVdCCWbRY6y9yZQ==}
 
+  '@types/nprogress@0.2.3':
+    resolution: {integrity: sha512-k7kRA033QNtC+gLc4VPlfnue58CM1iQLgn1IMAU8VPHGOj7oIHPp9UlhedEnD/Gl8evoCjwkZjlBORtZ3JByUA==}
+
   '@types/prismjs@1.26.5':
     resolution: {integrity: sha512-AUZTa7hQ2KY5L7AmtSiqxlhWxb4ina0yd8hNbl4TWuqnv/pFP0nDMb3YrfSBf4hJVGLh2YEIBfKaBW/9UEl6IQ==}
 
@@ -1573,6 +1582,9 @@ packages:
   normalize-range@0.1.2:
     resolution: {integrity: sha512-bdok/XvKII3nUpklnV6P2hxtMNrCboOjAcyBuQnWEhO665FwrSNRxU+AqpsyvO6LgGYPspN+lu5CLtw4jPRKNA==}
     engines: {node: '>=0.10.0'}
+
+  nprogress@0.2.0:
+    resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
 
   object-assign@4.1.1:
     resolution: {integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==}
@@ -2686,6 +2698,8 @@ snapshots:
     dependencies:
       undici-types: 6.21.0
 
+  '@types/nprogress@0.2.3': {}
+
   '@types/prismjs@1.26.5': {}
 
   '@types/prop-types@15.7.15': {}
@@ -3472,6 +3486,8 @@ snapshots:
   normalize-path@3.0.0: {}
 
   normalize-range@0.1.2: {}
+
+  nprogress@0.2.0: {}
 
   object-assign@4.1.1: {}
 
