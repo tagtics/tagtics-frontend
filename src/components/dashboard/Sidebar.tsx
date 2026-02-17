@@ -1,5 +1,7 @@
 import { LayoutDashboard, FolderKanban, Settings, LogOut, PanelLeftClose, PanelLeftOpen, X, CreditCard } from 'lucide-react';
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { PrefetchLink } from '@/components/common/PrefetchLink';
+import { RouteLoaderKey } from '@/config/routeLoaders';
 import { motion, AnimatePresence } from 'framer-motion';
 import { cn } from '@utils/cn';
 
@@ -11,11 +13,11 @@ interface SidebarProps {
 }
 
 export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen }: SidebarProps) {
-    const navItems = [
-        { icon: LayoutDashboard, label: 'Overview', path: '/dashboard' },
-        { icon: FolderKanban, label: 'Projects', path: '/dashboard/projects' },
-        { icon: CreditCard, label: 'Subscription', path: '/dashboard/subscription' },
-        { icon: Settings, label: 'Settings', path: '/dashboard/settings' },
+    const navItems: { icon: any, label: string, path: string, prefetchKey: RouteLoaderKey }[] = [
+        { icon: LayoutDashboard, label: 'Overview', path: '/dashboard', prefetchKey: 'Overview' },
+        { icon: FolderKanban, label: 'Projects', path: '/dashboard/projects', prefetchKey: 'Projects' },
+        { icon: CreditCard, label: 'Subscription', path: '/dashboard/subscription', prefetchKey: 'Subscription' },
+        { icon: Settings, label: 'Settings', path: '/dashboard/settings', prefetchKey: 'Settings' },
     ];
 
     return (
@@ -81,9 +83,10 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
             {/* Nav */}
             <nav className="flex-1 space-y-1 mt-2">
                 {navItems.map((item) => (
-                    <NavLink
+                    <PrefetchLink
                         key={item.path}
                         to={item.path}
+                        prefetchKey={item.prefetchKey}
                         end={item.path === '/dashboard'}
                         title={isCollapsed ? item.label : undefined}
                         onClick={() => onMobileClose?.()}
@@ -127,7 +130,7 @@ export function Sidebar({ isCollapsed, onToggle, onMobileClose, isMobileMenuOpen
                                 </AnimatePresence>
                             </>
                         )}
-                    </NavLink>
+                    </PrefetchLink>
                 ))}
             </nav>
 

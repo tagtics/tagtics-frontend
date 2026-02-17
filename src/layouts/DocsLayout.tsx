@@ -80,13 +80,13 @@ export function DocsLayout() {
 
                     <main className="flex-1 flex flex-col overflow-y-auto w-full h-full custom-scrollbar">
                         <div className="flex-1 w-full max-w-[1400px] mx-auto p-4 md:p-8">
-                            <AnimatePresence mode="wait">
+                            <AnimatePresence>
                                 <motion.div
                                     key={location.pathname}
                                     initial={{ opacity: 0, y: 10 }}
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
-                                    transition={{ duration: 0.2 }}
+                                    transition={{ duration: 0.15, ease: "easeOut" }}
                                     className="bg-white/60 dark:bg-white/5 backdrop-blur-md border border-gray-200 dark:border-white/10 rounded-2xl p-6 md:p-8 shadow-sm dark:shadow-none prose dark:prose-invert max-w-none min-h-[calc(100vh-200px)]"
                                 >
                                     <Outlet />

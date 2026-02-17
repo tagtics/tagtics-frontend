@@ -57,8 +57,8 @@ importers:
         specifier: ^2.0.1
         version: 2.0.7(react-dom@19.2.3(react@19.2.3))(react@19.2.3)
       tagtics-client:
-        specifier: ^1.3.5
-        version: 1.3.5
+        specifier: ^1.4.0
+        version: 1.4.0
       tailwind-merge:
         specifier: ^3.4.0
         version: 3.4.0
@@ -1939,8 +1939,8 @@ packages:
     resolution: {integrity: sha512-ot0WnXS9fgdkgIcePe6RHNk1WA8+muPa6cSjeR3V8K27q9BB1rTE3R1p7Hv0z1ZyAc8s6Vvv8DIyWf681MAt0w==}
     engines: {node: '>= 0.4'}
 
-  tagtics-client@1.3.5:
-    resolution: {integrity: sha512-KbrD1pXg+PfCHN5dRBuqKEQmxmQvVxifbk+UO+YG2hFdL14k7roTCjbbtW7q1A0flY4xkQAGUSokPNQ8alB1eg==}
+  tagtics-client@1.4.0:
+    resolution: {integrity: sha512-omjdmWS256E38SFBg0yWtE6Pee/xkZLCAxcruYirA0mYYFZeq4ueXUP1COfqo1kmWl+bjd1cMDkiaRByMbIpzw==}
 
   tailwind-merge@3.4.0:
     resolution: {integrity: sha512-uSaO4gnW+b3Y2aWoWfFpX62vn2sR3skfhbjsEnaBI81WD1wBLlHZe5sWf0AqjksNdYTbGBEd0UasQMT3SNV15g==}
@@ -3838,7 +3838,7 @@ snapshots:
 
   supports-preserve-symlinks-flag@1.0.0: {}
 
-  tagtics-client@1.3.5: {}
+  tagtics-client@1.4.0: {}
 
   tailwind-merge@3.4.0: {}
 

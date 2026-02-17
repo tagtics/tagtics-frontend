@@ -1,4 +1,6 @@
-import { NavLink, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { PrefetchLink } from '@/components/common/PrefetchLink';
+import { RouteLoaderKey } from '@/config/routeLoaders';
 import { Layers, Box, Cpu, PanelLeftClose, PanelLeftOpen, X, Monitor } from 'lucide-react';
 import clsx from 'clsx';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -55,27 +57,28 @@ type SidebarItemType = {
     href?: string;
     icon?: any;
     items?: SidebarItemType[];
+    prefetchKey?: RouteLoaderKey;
 };
 
 const docsLinks: { title: string; items: SidebarItemType[] }[] = [
     {
         title: 'Overview',
         items: [
-            { label: 'Introduction', href: '/docs/overview/intro', icon: Layers },
-            { label: 'Features', href: '/docs/overview/features', icon: Box },
-            { label: 'Tech Stack', href: '/docs/overview/tech-stack', icon: Cpu },
+            { label: 'Introduction', href: '/docs/overview/intro', icon: Layers, prefetchKey: 'DocsOverview' },
+            { label: 'Features', href: '/docs/overview/features', icon: Box, prefetchKey: 'DocsOverview' },
+            { label: 'Tech Stack', href: '/docs/overview/tech-stack', icon: Cpu, prefetchKey: 'DocsOverview' },
         ],
     },
     {
         title: 'Implementations',
         items: [
-            { label: 'Client Overview', href: '/docs/implementation/overview', icon: Monitor },
-            { label: 'React / Next.js', href: '/docs/implementation/react', icon: ReactIcon },
-            { label: 'Vue 3', href: '/docs/implementation/vue', icon: VueIcon },
-            { label: 'Angular', href: '/docs/implementation/angular', icon: AngularIcon },
-            { label: 'Svelte', href: '/docs/implementation/svelte', icon: SvelteIcon },
-            { label: 'Solid.js', href: '/docs/implementation/solid', icon: SolidIcon },
-            { label: 'Vanilla JS / HTML', href: '/docs/implementation/script', icon: JSIcon },
+            { label: 'Client Overview', href: '/docs/implementation/overview', icon: Monitor, prefetchKey: 'DocsImplementation' },
+            { label: 'React / Next.js', href: '/docs/implementation/react', icon: ReactIcon, prefetchKey: 'DocsImplementation' },
+            { label: 'Vue 3', href: '/docs/implementation/vue', icon: VueIcon, prefetchKey: 'DocsImplementation' },
+            { label: 'Angular', href: '/docs/implementation/angular', icon: AngularIcon, prefetchKey: 'DocsImplementation' },
+            { label: 'Svelte', href: '/docs/implementation/svelte', icon: SvelteIcon, prefetchKey: 'DocsImplementation' },
+            { label: 'Solid.js', href: '/docs/implementation/solid', icon: SolidIcon, prefetchKey: 'DocsImplementation' },
+            { label: 'Vanilla JS / HTML', href: '/docs/implementation/script', icon: JSIcon, prefetchKey: 'DocsImplementation' },
         ],
     },
 ];
@@ -177,8 +180,9 @@ function SidebarItem({ item, isCollapsed, onExpand, onMobileClose }: { item: Sid
 
     return (
         <li>
-            <NavLink
+            <PrefetchLink
                 to={item.href!}
+                prefetchKey={item.prefetchKey}
                 onClick={handleClick}
                 className={({ isActive }) =>
                     clsx(
@@ -192,7 +196,7 @@ function SidebarItem({ item, isCollapsed, onExpand, onMobileClose }: { item: Sid
             >
                 {item.icon && <item.icon className={clsx("h-5 w-5 shrink-0 transition-all", isCollapsed ? "mr-0" : "")} />}
                 {!isCollapsed && <span>{item.label}</span>}
-            </NavLink>
+            </PrefetchLink>
         </li>
     );
 }

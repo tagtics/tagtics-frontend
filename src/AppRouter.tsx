@@ -1,63 +1,75 @@
-import { Routes, Route, Navigate } from "react-router-dom";
-import { lazy, Suspense } from "react";
+import { createBrowserRouter, createRoutesFromElements, Route, Navigate } from "react-router-dom";
+import { Suspense } from "react";
 import { LoadingFallback } from "@utils/LoadingFallback";
 
-export function AppRouter() {
-  const Home = lazy(() => import('@pages/Home'));
-  const DashboardLayout = lazy(() => import('@layouts/DashboardLayout').then(module => ({ default: module.DashboardLayout })));
-  const ProjectDetailLayout = lazy(() => import('@layouts/ProjectDetailLayout').then(module => ({ default: module.ProjectDetailLayout })));
-  const Overview = lazy(() => import('@pages/dashboard/Overview'));
-  const Projects = lazy(() => import('@pages/dashboard/Projects'));
-  const ProjectFeedbacks = lazy(() => import('@pages/dashboard/ProjectFeedbacks'));
-  const ProjectSettings = lazy(() => import('@pages/dashboard/ProjectSettings'));
-  const Settings = lazy(() => import('@pages/dashboard/Settings'));
-  const Subscription = lazy(() => import('@pages/dashboard/Subscription'));
-  const NotFound = lazy(() => import('@pages/errors/NotFound'));
-  const ServerError = lazy(() => import('@pages/errors/ServerError'));
+import { routeLoaders } from "@/config/routeLoaders";
 
-  // Docs Imports
-  const DocsLayout = lazy(() => import('@layouts/DocsLayout').then(module => ({ default: module.DocsLayout })));
-  const DocsOverview = lazy(() => import('@pages/docs/Overview'));
-  const DocsImplementation = lazy(() => import('@pages/docs/Implementation'));
 
-  return (
-    <Suspense fallback={<LoadingFallback />}>
-      <Routes>
-        <Route path="/" element={<Home />} />
+export const router = createBrowserRouter(
+  createRoutesFromElements(
+    // Global Suspense wrapper via Layout or just wrapping the root
+    // Since createBrowserRouter doesn't support a simple wrapper like BrowserRouter does, 
+    // we attach Suspense to the element prop or use a Root layout.
+    // However, clean migration suggests keeping structure.
+    // Let's create a Root element that handles the Suspense.
+    <Route element={<RootLayout />}>
+        <Route path="/" lazy={routeLoaders.Home} />
 
         {/* Dashboard Routes */}
-        <Route path="/dashboard" element={<DashboardLayout />}>
-          <Route index element={<Overview />} />
-          <Route path="projects" element={<Projects />} />
+        <Route path="/dashboard" lazy={routeLoaders.DashboardLayout}>
+          <Route index lazy={routeLoaders.Overview} />
+          <Route path="projects" lazy={routeLoaders.Projects} />
 
           {/* Project Detail Routes with Sub-Navigation */}
-          <Route path="projects/:projectId" element={<ProjectDetailLayout />}>
-            <Route index element={<ProjectFeedbacks />} />
+          <Route path="projects/:projectId" lazy={routeLoaders.ProjectDetailLayout}>
+            <Route index lazy={routeLoaders.ProjectFeedbacks} />
             <Route path="analytics" element={
               <div className="p-8 rounded-2xl border border-gray-100 dark:border-white/10 bg-white/60 dark:bg-white/5 shadow-sm dark:shadow-none backdrop-blur-md text-center">
                 <h2 className="text-xl font-bold text-gray-900 dark:text-white">Analytics</h2>
                 <p className="text-gray-500 dark:text-gray-400 mt-2">Detailed insights coming soon.</p>
               </div>
             } />
-            <Route path="settings" element={<ProjectSettings />} />
+            <Route path="settings" lazy={routeLoaders.ProjectSettings} />
           </Route>
 
-          <Route path="settings" element={<Settings />} />
-          <Route path="subscription" element={<Subscription />} />
+          <Route path="settings" lazy={routeLoaders.Settings} />
+          <Route path="subscription" lazy={routeLoaders.Subscription} />
         </Route>
 
         {/* Documentation Routes */}
-        <Route path="docs" element={<DocsLayout />}>
+        <Route path="docs" lazy={routeLoaders.DocsLayout}>
           <Route index element={<Navigate to="overview/intro" replace />} />
           <Route path="overview" element={<Navigate to="intro" replace />} />
-          <Route path="overview/:section" element={<DocsOverview />} />
+          <Route path="overview/:section" lazy={routeLoaders.DocsOverview} />
           <Route path="implementation" element={<Navigate to="overview" replace />} />
-          <Route path="implementation/:framework" element={<DocsImplementation />} />
+          <Route path="implementation/:framework" lazy={routeLoaders.DocsImplementation} />
         </Route>
 
-        <Route path="*" element={<NotFound />} />
-        <Route path="/500" element={<ServerError />} />
-      </Routes>
+        <Route path="*" lazy={routeLoaders.NotFound} />
+        <Route path="/500" lazy={routeLoaders.ServerError} />
+    </Route>
+  ),
+  {
+    future: {
+      v7_relativeSplatPath: true,
+      v7_fetcherPersist: true,
+      v7_normalizeFormMethod: true,
+      v7_partialHydration: true,
+      v7_skipActionErrorRevalidation: true,
+    }
+  }
+);
+
+import { Outlet } from "react-router-dom";
+import { Toaster } from 'sonner';
+import { GlobalProgressBar } from "@components/common/GlobalProgressBar";
+
+function RootLayout() {
+  return (
+    <Suspense fallback={<LoadingFallback />}>
+      <GlobalProgressBar />
+      <Outlet />
+      <Toaster position="bottom-right" theme="dark" richColors />
     </Suspense>
   );
 }
