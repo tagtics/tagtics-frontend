@@ -45,3 +45,17 @@ body {
 ::view-transition-new(root) {
   z-index: 9999;
 }
+
+/* NProgress Customization */
+#nprogress .bar {
+  background: #3b82f6 !important; /* Tailwind blue-500 */
+  height: 3px !important;
+  z-index: 10000;
+}
+#nprogress .peg {
+  box-shadow: 0 0 10px #3b82f6, 0 0 5px #3b82f6 !important;
+}
+#nprogress .spinner-icon {
+  border-top-color: #3b82f6 !important;
+  border-left-color: #3b82f6 !important;
+}

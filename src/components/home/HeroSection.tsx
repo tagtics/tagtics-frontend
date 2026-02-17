@@ -2,8 +2,16 @@ import { ArrowRight } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '@utils/auth';
 
+import { routeLoaders } from '@/config/routeLoaders';
+
 export function HeroSection() {
   const navigate = useNavigate();
+
+  const handlePrefetch = () => {
+    // Prefetch both Layout and the direct child route
+    routeLoaders.DashboardLayout();
+    routeLoaders.Overview();
+  };
 
   return (
     <section className="min-h-screen flex items-center justify-center relative overflow-hidden">
@@ -25,6 +33,7 @@ export function HeroSection() {
 
         <button
           onClick={() => navigate('/dashboard')}
+          onMouseEnter={handlePrefetch}
           className="group relative inline-flex items-center gap-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 dark:from-transparent dark:to-transparent dark:bg-white text-white dark:text-black rounded-full font-bold text-lg hover:shadow-lg hover:shadow-blue-500/25 dark:hover:shadow-[0_0_20px_rgba(255,255,255,0.3)] transition-all hover:scale-105"
         >
           <span className="relative z-10">{isAuthenticated ? 'Go to Dashboard' : 'Get Started'}</span>

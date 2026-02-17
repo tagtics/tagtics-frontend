@@ -10,7 +10,7 @@ export function DashboardTransition({ children }: DashboardTransitionProps) {
     const location = useLocation();
 
     return (
-        <AnimatePresence mode="wait">
+        <AnimatePresence>
             <motion.div
                 key={location.pathname}
                 initial={{ opacity: 0, scale: 1.02 }}
